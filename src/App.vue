@@ -5,3 +5,5 @@
 <script>
 export default {};
 </script>
+
+<!-- Legend -->
