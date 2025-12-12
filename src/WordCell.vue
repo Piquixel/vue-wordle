@@ -1,7 +1,17 @@
 <script>
-export default {};
+export default {
+  props: {
+    char: {
+      type: String,
+      validator: (value) => value.length < 2,
+      default: "",
+    },
+  },
+};
 </script>
 
 <template>
-  <div></div>
+  <td>
+    <slot></slot>
+  </td>
 </template>
