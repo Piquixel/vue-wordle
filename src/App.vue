@@ -26,7 +26,8 @@ export default {
             return response.json();
         })
         .then(data => {
-            this.wordToGuess = data.name;
+            console.log(data);
+            this.wordToGuess = data[0]['name'];
         })
         .catch(error => {
             console.log(error.message);
@@ -40,7 +41,7 @@ export default {
   },
 
   beforeMount(){
-    this.setWord();
+    this.setWord(); //lance la fonction au chargement de la page
   }
 };
 </script>
