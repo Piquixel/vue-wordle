@@ -106,7 +106,6 @@ export default {
 </script>
 
 <template>
-  <button v-on:click="test">TEST</button>
   <WordGrid></WordGrid>
   <KeyInput :keyboard="keyboard"></KeyInput>
   <ResultPopout v-if="gameFinished"></ResultPopout>
