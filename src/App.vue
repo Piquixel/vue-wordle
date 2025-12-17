@@ -2,9 +2,10 @@
 
 import ResultPopout from "./ResultPopout.vue";
 import GameBoard from "./GameBoard.vue";
+import DarkModeInput from "./DarkModeInput.vue";
 
 export default {
-  components: { ResultPopout, GameBoard },
+  components: { ResultPopout, GameBoard, DarkModeInput },
 
   data() {
     return {
@@ -129,7 +130,7 @@ export default {
 </script>
 
 <template>
-  <button @click="toggleDark">Switch dark/light mode</button>
+  <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
   <GameBoard :attempts="attempts" :keyboard="keyboard" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
@@ -142,6 +143,7 @@ export default {
 body {
   background-color: var(--dk-bk-color);
   color: white;
+  transition: 0.8s cubic-bezier(0.11, 0, 0.5, 0);
 }
 .light-mode {
   background-color: aliceblue;
