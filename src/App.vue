@@ -10,7 +10,7 @@ export default {
     return {
       gameFinished: false,
       apiCall: "https://trouve-mot.fr/api/size/",
-      darkMode: localStorage.getItem("darkMode"),
+      darkMode: true,
       wordToGuess: "",
       keyboard: [],
       attempts: [],
@@ -22,7 +22,7 @@ export default {
   methods: {
     //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
     setWord() {
-      if (!localStorage.getItem(this.wordToGuess)) {
+      if (!localStorage.getItem("wordToGuess")) {
         fetch(this.apiCall+this.wordLength)
           .then((response) => {
             if (!response.ok) {
@@ -94,8 +94,26 @@ export default {
       }
     },
 
+    setDarkMode(){
+      if(localStorage.getItem("darkMode") === null){
+        localStorage.setItem("darkMode", true);
+      }
+      else{
+        this.darkMode =  JSON.parse(localStorage.getItem("darkMode"));
+      }
+
+      if(this.darkMode === true){
+        document.body.classList.remove("light-mode");
+      }
+      else{
+        document.body.classList.add("light-mode");
+      }
+    },
+
     toggleDark() {
       var bdy = document.body;
+      this.darkMode = !this.darkMode;
+      localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
       bdy.classList.toggle("light-mode");
     },
   },
@@ -105,6 +123,7 @@ export default {
     this.setWord();
     this.setKeyboard();
     this.setAttempts();
+    this.setDarkMode();
   },
 };
 </script>
