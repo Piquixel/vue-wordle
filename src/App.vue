@@ -1,26 +1,29 @@
 <script>
-import WordGrid from "./WordGrid.vue";
-import KeyInput from "./KeyInput.vue";
 import ResultPopout from "./ResultPopout.vue";
+import GameBoard from "./GameBoard.vue";
+import DarkModeInput from "./DarkModeInput.vue";
+
 export default {
-  components: { KeyInput, WordGrid, ResultPopout },
+  components: { ResultPopout, GameBoard, DarkModeInput },
 
   data() {
     return {
       gameFinished: false,
-      apiCall: "https://trouve-mot.fr/api/size/5",
-      darkMode: localStorage.getItem("darkMode"),
+      apiCall: "https://trouve-mot.fr/api/size/",
+      darkMode: true,
       wordToGuess: "",
       keyboard: [],
-      attempts: new Array(6),
+      attempts: new Array(this.nbAttempts),
+      nbAttempts: 6,
+      wordLength: 5,
     };
   },
 
   methods: {
     //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
     setWord() {
-      if (!localStorage.getItem(this.wordToGuess)) {
-        fetch(this.apiCall)
+      if (!localStorage.getItem("wordToGuess")) {
+        fetch(this.apiCall + this.wordLength)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Word not found");
@@ -91,8 +94,24 @@ export default {
       }
     },
 
+    setDarkMode() {
+      if (localStorage.getItem("darkMode") === null) {
+        localStorage.setItem("darkMode", true);
+      } else {
+        this.darkMode = JSON.parse(localStorage.getItem("darkMode"));
+      }
+
+      if (this.darkMode === true) {
+        document.body.classList.remove("light-mode");
+      } else {
+        document.body.classList.add("light-mode");
+      }
+    },
+
     toggleDark() {
       var bdy = document.body;
+      this.darkMode = !this.darkMode;
+      localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
       bdy.classList.toggle("light-mode");
     },
   },
@@ -102,14 +121,19 @@ export default {
     this.setWord();
     this.setKeyboard();
     this.setAttempts();
+    this.setDarkMode();
   },
 };
 </script>
 
 <template>
-  <button @click="toggleDark">Switch dark/light mode</button>
-  <WordGrid :attempts></WordGrid>
-  <KeyInput :keyboard="keyboard"></KeyInput>
+  <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
+  <GameBoard
+    :attempts="attempts"
+    :keyboard="keyboard"
+    :nbAttempts="nbAttempts"
+    :wordLength="wordLength"
+  ></GameBoard>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
 
@@ -121,6 +145,7 @@ export default {
 body {
   background-color: var(--dk-bk-color);
   color: white;
+  transition: 0.8s cubic-bezier(0.11, 0, 0.5, 0);
 }
 .light-mode {
   background-color: aliceblue;
