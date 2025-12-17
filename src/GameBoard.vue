@@ -21,18 +21,25 @@
         type: Number,
         required: true
       },
+      wordToGuess:{
+        type: String,
+        required: true
+      },
     },
 
     data(){
       return {
 
       }
+    },
+
+    methods: {
     }
   }
 </script>
 
 <template>
-  <WordGrid :attempts="attempts" :wordLength="wordLength" :nbAttempts="nbAttempts"></WordGrid>
+  <WordGrid :wordToGuess="wordToGuess" :attempts="attempts" :keyboard="keyboard" :wordLength="wordLength" :nbAttempts="nbAttempts"></WordGrid>
   <KeyInput :keyboard="keyboard"></KeyInput>
 </template>
 

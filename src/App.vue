@@ -131,7 +131,7 @@ export default {
 
 <template>
   <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard :attempts="attempts" :keyboard="keyboard" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
+  <GameBoard :wordToGuess="wordToGuess" :attempts="attempts" :keyboard="keyboard" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
 
