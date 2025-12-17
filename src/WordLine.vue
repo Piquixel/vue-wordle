@@ -5,12 +5,14 @@ export default {
   props: {
     input: {
       type: String,
-      default: "     ",
+      default: "",
+      // required: true
     },
   },
   data() {
     return {
       wordLength: 5,
+      guess: this.input.padEnd(this.wordLength),
     };
   },
 };
@@ -18,6 +20,6 @@ export default {
 
 <template>
   <tr>
-    <WordCell v-for="n in wordLength" :key="n">{{ input[n] }}</WordCell>
+    <WordCell v-for="n in wordLength" :key="n">{{ guess[n] }}</WordCell>
   </tr>
 </template>

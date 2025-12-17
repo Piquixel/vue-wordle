@@ -2,9 +2,15 @@
 import WordLine from "./WordLine.vue";
 export default {
   components: { WordLine },
+  props: {
+    attempts: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      attempts: 6,
+      // attemptsLength: this.attempts.length,
     };
   },
 };
@@ -13,7 +19,7 @@ export default {
 <template>
   <table border>
     <tbody>
-      <WordLine v-for="attempt in attempts" :key="attempt"></WordLine>
+      <WordLine v-for="word in attempts" :key="word"></WordLine>
     </tbody>
   </table>
 </template>

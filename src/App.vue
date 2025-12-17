@@ -3,49 +3,46 @@ import WordGrid from "./WordGrid.vue";
 import KeyInput from "./KeyInput.vue";
 import ResultPopout from "./ResultPopout.vue";
 export default {
-  components: { KeyInput, WordGrid, ResultPopout},
+  components: { KeyInput, WordGrid, ResultPopout },
 
-  data(){
+  data() {
     return {
-      gameFinished : false,
-      apiCall : 'https://trouve-mot.fr/api/size/5',
-      darkMode : localStorage.getItem('darkMode'),
+      gameFinished: false,
+      apiCall: "https://trouve-mot.fr/api/size/5",
+      darkMode: localStorage.getItem("darkMode"),
       wordToGuess: "",
       keyboard: [],
-      attempts: [],
-    }
+      attempts: ["", "", "", "", "", ""],
+    };
   },
 
-  methods:{
+  methods: {
     //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
-    setWord(){
-      if (!localStorage.getItem(this.wordToGuess)){
+    setWord() {
+      if (!localStorage.getItem(this.wordToGuess)) {
         fetch(this.apiCall)
-        .then(response => {
-            if (!response.ok){
-                throw new Error('Word not found');
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Word not found");
             }
             return response.json();
-        })
-        .then(data => {
+          })
+          .then((data) => {
             console.log(data);
-            this.wordToGuess = data[0]['name'];
-            localStorage.setItem('wordToGuess', this.wordToGuess);
-        })
-        .catch(error => {
+            this.wordToGuess = data[0]["name"];
+            localStorage.setItem("wordToGuess", this.wordToGuess);
+          })
+          .catch((error) => {
             console.log(error.message);
-        });
+          });
+      } else {
+        this.wordToGuess = localStorage.getItem("wordToGuess");
       }
-      else{
-        this.wordToGuess = localStorage.getItem('wordToGuess');
-      }
-
-
     },
 
     //fonction qui vérifie si un clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
-    setKeyboard(){
-      if (!localStorage.getItem(this.wordToGuess)){
+    setKeyboard() {
+      if (!localStorage.getItem(this.wordToGuess)) {
         this.keyboard = [
           // Ligne 1
           { key: "A", status: "unused" },
@@ -81,32 +78,31 @@ export default {
           { key: "N", status: "unused" },
           { key: "DEL", status: "unused" },
         ];
+      } else {
+        this.keyboard = JSON.parse(localStorage.getItem("keyboard"));
       }
-      else{
-        this.keyboard = JSON.parse(localStorage.getItem('keyboard'));
-      }
-      localStorage.setItem('keyboard', JSON.stringify(this.keyboard));
+      localStorage.setItem("keyboard", JSON.stringify(this.keyboard));
     },
 
     //fonction qui vérifie si des tentatives sont déjà présentes
-    setAttempts(){
-      if (localStorage.getItem('attempts')){
-        this.attempts = localStorage.getItem('attempts');
+    setAttempts() {
+      if (localStorage.getItem("attempts")) {
+        this.attempts = localStorage.getItem("attempts");
       }
     },
 
-    toggleDark(){
+    toggleDark() {
       var bdy = document.body;
-      bdy.classList.toggle('light-mode');
-    }
-
+      bdy.classList.toggle("light-mode");
+    },
   },
 
-  beforeMount(){ //lance des fonctions au chargement de la page
+  beforeMount() {
+    //lance des fonctions au chargement de la page
     this.setWord();
     this.setKeyboard();
     this.setAttempts();
-  }
+  },
 };
 </script>
 
@@ -118,16 +114,16 @@ export default {
 </template>
 
 <style>
-  :root{
-    --dk-bk-color : #2E2E2E;
-    --dk-sec-color: #69E169;
-  }
-  body{
-    background-color: var(--dk-bk-color);
-    color: white;
-  }
-  .light-mode{
-    background-color: aliceblue;
-    color: black;
-  }
+:root {
+  --dk-bk-color: #2e2e2e;
+  --dk-sec-color: #69e169;
+}
+body {
+  background-color: var(--dk-bk-color);
+  color: white;
+}
+.light-mode {
+  background-color: aliceblue;
+  color: black;
+}
 </style>
