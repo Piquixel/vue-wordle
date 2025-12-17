@@ -95,6 +95,11 @@ export default {
       }
     },
 
+    toggleDark(){
+      var bdy = document.body;
+      bdy.classList.toggle('light-mode');
+    }
+
   },
 
   beforeMount(){ //lance des fonctions au chargement de la page
@@ -106,7 +111,23 @@ export default {
 </script>
 
 <template>
-  <WordGrid></WordGrid>
+  <button @click="toggleDark">Switch dark/light mode</button>
+  <WordGrid :attempts></WordGrid>
   <KeyInput :keyboard="keyboard"></KeyInput>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
+
+<style>
+  :root{
+    --dk-bk-color : #2E2E2E;
+    --dk-sec-color: #69E169;
+  }
+  body{
+    background-color: var(--dk-bk-color);
+    color: white;
+  }
+  .light-mode{
+    background-color: aliceblue;
+    color: black;
+  }
+</style>
