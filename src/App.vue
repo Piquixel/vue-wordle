@@ -1,18 +1,21 @@
 <script>
-import WordGrid from "./WordGrid.vue";
-import KeyInput from "./KeyInput.vue";
+
 import ResultPopout from "./ResultPopout.vue";
+import GameBoard from "./GameBoard.vue";
+
 export default {
-  components: { KeyInput, WordGrid, ResultPopout },
+  components: { ResultPopout, GameBoard },
 
   data() {
     return {
       gameFinished: false,
-      apiCall: "https://trouve-mot.fr/api/size/5",
+      apiCall: "https://trouve-mot.fr/api/size/",
       darkMode: localStorage.getItem("darkMode"),
       wordToGuess: "",
       keyboard: [],
-      attempts: ["", "", "", "", "", ""],
+      attempts: [],
+      nbAttempts: 6,
+      wordLength: 5,
     };
   },
 
@@ -20,7 +23,7 @@ export default {
     //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
     setWord() {
       if (!localStorage.getItem(this.wordToGuess)) {
-        fetch(this.apiCall)
+        fetch(this.apiCall+this.wordLength)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Word not found");
@@ -108,8 +111,7 @@ export default {
 
 <template>
   <button @click="toggleDark">Switch dark/light mode</button>
-  <WordGrid :attempts></WordGrid>
-  <KeyInput :keyboard="keyboard"></KeyInput>
+  <GameBoard :attempts="attempts" :keyboard="keyboard"></GameBoard>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
 
