@@ -6,7 +6,7 @@ export default {
     input: {
       type: String,
       default: "",
-      // required: true
+      required: true,
     },
   },
   data() {
@@ -20,6 +20,6 @@ export default {
 
 <template>
   <tr>
-    <WordCell v-for="n in wordLength" :key="n">{{ guess[n] }}</WordCell>
+    <WordCell v-for="n in wordLength" :key="n">{{ guess[n - 1] }}</WordCell>
   </tr>
 </template>

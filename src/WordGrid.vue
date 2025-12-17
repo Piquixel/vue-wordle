@@ -9,9 +9,7 @@ export default {
     },
   },
   data() {
-    return {
-      // attemptsLength: this.attempts.length,
-    };
+    return {};
   },
 };
 </script>
@@ -19,7 +17,7 @@ export default {
 <template>
   <table border>
     <tbody>
-      <WordLine v-for="word in attempts" :key="word"></WordLine>
+      <WordLine v-for="word in attempts" :key="word" :input="attempts[word - 1]"></WordLine>
     </tbody>
   </table>
 </template>
