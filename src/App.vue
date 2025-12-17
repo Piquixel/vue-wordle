@@ -12,7 +12,7 @@ export default {
       darkMode: localStorage.getItem("darkMode"),
       wordToGuess: "",
       keyboard: [],
-      attempts: ["", "", "", "", "", ""],
+      attempts: new Array(6),
     };
   },
 

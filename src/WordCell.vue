@@ -1,12 +1,10 @@
 <script>
 export default {
-  props: {
-    char: {
-      type: String,
-      validator: (value) => value.length < 2,
-      default: "",
-    },
+  props: {},
+  data() {
+    return {};
   },
+  methods: {},
 };
 </script>
 
