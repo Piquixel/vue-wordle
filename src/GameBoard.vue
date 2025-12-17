@@ -12,7 +12,15 @@
       keyboard:{
         type: Array,
         required: true
-      }
+      },
+      nbAttempts:{
+        type: Number,
+        required: true
+      },
+      wordLength:{
+        type: Number,
+        required: true
+      },
     },
 
     data(){
@@ -24,7 +32,7 @@
 </script>
 
 <template>
-  <WordGrid :attempts></WordGrid>
+  <WordGrid :attempts="attempts" :wordLength="wordLength" :nbAttempts="nbAttempts"></WordGrid>
   <KeyInput :keyboard="keyboard"></KeyInput>
 </template>
 

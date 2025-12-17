@@ -111,7 +111,7 @@ export default {
 
 <template>
   <button @click="toggleDark">Switch dark/light mode</button>
-  <GameBoard :attempts="attempts" :keyboard="keyboard"></GameBoard>
+  <GameBoard :attempts="attempts" :keyboard="keyboard" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
 
