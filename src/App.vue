@@ -1,5 +1,4 @@
 <script>
-
 import ResultPopout from "./ResultPopout.vue";
 import GameBoard from "./GameBoard.vue";
 import DarkModeInput from "./DarkModeInput.vue";
@@ -14,7 +13,7 @@ export default {
       darkMode: true,
       wordToGuess: "",
       keyboard: [],
-      attempts: [],
+      attempts: new Array(this.nbAttempts),
       nbAttempts: 6,
       wordLength: 5,
     };
@@ -24,7 +23,7 @@ export default {
     //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
     setWord() {
       if (!localStorage.getItem("wordToGuess")) {
-        fetch(this.apiCall+this.wordLength)
+        fetch(this.apiCall + this.wordLength)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Word not found");
@@ -95,18 +94,16 @@ export default {
       }
     },
 
-    setDarkMode(){
-      if(localStorage.getItem("darkMode") === null){
+    setDarkMode() {
+      if (localStorage.getItem("darkMode") === null) {
         localStorage.setItem("darkMode", true);
-      }
-      else{
-        this.darkMode =  JSON.parse(localStorage.getItem("darkMode"));
+      } else {
+        this.darkMode = JSON.parse(localStorage.getItem("darkMode"));
       }
 
-      if(this.darkMode === true){
+      if (this.darkMode === true) {
         document.body.classList.remove("light-mode");
-      }
-      else{
+      } else {
         document.body.classList.add("light-mode");
       }
     },
