@@ -9,7 +9,7 @@
         type: Array,
         required: true
       },
-      keyboard:{
+      keysState:{
         type: Array,
         required: true
       },
@@ -39,8 +39,8 @@
 </script>
 
 <template>
-  <WordGrid :wordToGuess="wordToGuess" :attempts="attempts" :keyboard="keyboard" :wordLength="wordLength" :nbAttempts="nbAttempts"></WordGrid>
-  <KeyInput :keyboard="keyboard"></KeyInput>
+  <WordGrid :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts"></WordGrid>
+  <KeyInput :keysState="keysState"></KeyInput>
 </template>
 
 <style>

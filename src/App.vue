@@ -8,11 +8,11 @@ export default {
 
   data() {
     return {
-      gameFinished: false,
+      gameFinished: false, // à set en localStorage !!
       apiCall: "https://trouve-mot.fr/api/size/",
       darkMode: true,
       wordToGuess: "",
-      keyboard: [],
+      keysState: [],
       attempts: new Array(this.nbAttempts),
       nbAttempts: 6,
       wordLength: 5,
@@ -44,47 +44,47 @@ export default {
     },
 
     //fonction qui vérifie si un clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
-    setKeyboard() {
+    setkeysState() {
       if (!localStorage.getItem(this.wordToGuess)) {
-        this.keyboard = [
+        this.keysState = [
           // Ligne 1
-          { key: "A", status: "unused" },
-          { key: "Z", status: "unused" },
-          { key: "E", status: "unused" },
-          { key: "R", status: "unused" },
-          { key: "T", status: "unused" },
-          { key: "Y", status: "unused" },
-          { key: "U", status: "unused" },
-          { key: "I", status: "unused" },
-          { key: "O", status: "unused" },
-          { key: "P", status: "unused" },
+          { key: "Z", status: null },
+          { key: "A", status: null },
+          { key: "E", status: null },
+          { key: "R", status: null },
+          { key: "T", status: null },
+          { key: "Y", status: null },
+          { key: "U", status: null },
+          { key: "I", status: null },
+          { key: "O", status: null },
+          { key: "P", status: null },
 
           // Ligne 2
-          { key: "Q", status: "unused" },
-          { key: "S", status: "unused" },
-          { key: "D", status: "unused" },
-          { key: "F", status: "unused" },
-          { key: "G", status: "unused" },
-          { key: "H", status: "unused" },
-          { key: "J", status: "unused" },
-          { key: "K", status: "unused" },
-          { key: "L", status: "unused" },
-          { key: "M", status: "unused" },
+          { key: "Q", status: null },
+          { key: "S", status: null },
+          { key: "D", status: null },
+          { key: "F", status: null },
+          { key: "G", status: null },
+          { key: "H", status: null },
+          { key: "J", status: null },
+          { key: "K", status: null },
+          { key: "L", status: null },
+          { key: "M", status: null },
 
           // Ligne 3
-          { key: "ENTER", status: "unused" },
-          { key: "W", status: "unused" },
-          { key: "X", status: "unused" },
-          { key: "C", status: "unused" },
-          { key: "V", status: "unused" },
-          { key: "B", status: "unused" },
-          { key: "N", status: "unused" },
-          { key: "DEL", status: "unused" },
+          { key: "ENTER", status: null },
+          { key: "W", status: null },
+          { key: "X", status: null },
+          { key: "C", status: null },
+          { key: "V", status: null },
+          { key: "B", status: null },
+          { key: "N", status: null },
+          { key: "DEL", status: null },
         ];
       } else {
-        this.keyboard = JSON.parse(localStorage.getItem("keyboard"));
+        this.keysState = JSON.parse(localStorage.getItem("keysState"));
       }
-      localStorage.setItem("keyboard", JSON.stringify(this.keyboard));
+      localStorage.setItem("keysState", JSON.stringify(this.keysState));
     },
 
     //fonction qui vérifie si des tentatives sont déjà présentes
@@ -119,7 +119,7 @@ export default {
   beforeMount() {
     //lance des fonctions au chargement de la page
     this.setWord();
-    this.setKeyboard();
+    this.setkeysState();
     this.setAttempts();
     this.setDarkMode();
   },
@@ -128,7 +128,7 @@ export default {
 
 <template>
   <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard :wordToGuess="wordToGuess" :attempts="attempts" :keyboard="keyboard" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
+  <GameBoard :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
   <ResultPopout v-if="gameFinished"></ResultPopout>
 </template>
 
