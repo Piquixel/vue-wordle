@@ -45,7 +45,7 @@ export default {
 
     //fonction qui vérifie si un clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
     setkeysState() {
-      if (!localStorage.getItem(this.wordToGuess)) {
+      if (!localStorage.getItem(this.keysState)) {
         this.keysState = [
           // Ligne 1
           { key: "Z", status: null },
