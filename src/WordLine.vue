@@ -2,7 +2,12 @@
 import WordCell from "./WordCell.vue";
 export default {
   components: { WordCell },
-  props: {},
+  props: {
+    wordToGuess: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {};
   },
@@ -12,6 +17,6 @@ export default {
 
 <template>
   <tr>
-    <WordCell v-for="n in wordLength" :key="n"></WordCell>
+    <WordCell v-for="n in wordToGuess" :key="n"></WordCell>
   </tr>
 </template>
