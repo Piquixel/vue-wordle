@@ -97,25 +97,33 @@ export default {
 
     //fonction qui vérifie le mode sombre au chargement
     setDarkMode() {
+      var dark = document.getElementsByClassName('dark-mode')[0];
       if (localStorage.getItem("darkMode") === null) {
         localStorage.setItem("darkMode", true);
+        dark.classList.add("active");
+        this.darkMode = true;
       } else {
         this.darkMode = JSON.parse(localStorage.getItem("darkMode"));
       }
 
       if (this.darkMode === true) {
-        document.body.classList.remove("light-mode");
+        dark.classList.add("active");
       } else {
-        document.body.classList.add("light-mode");
+        dark.classList.remove("active");
       }
     },
 
     //fonction qui change le mode sombre
     toggleDark() {
-      var bdy = document.body;
+      // var bdy = document.body;
+      // this.darkMode = !this.darkMode;
+      // localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
+      // bdy.classList.toggle("light-mode");
+      let dark = document.getElementsByClassName('dark-mode')[0];
+
       this.darkMode = !this.darkMode;
       localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
-      bdy.classList.toggle("light-mode");
+      dark.classList.toggle("active");
     },
   },
 
@@ -124,8 +132,11 @@ export default {
     this.setWord();
     this.setkeysState();
     this.setAttempts();
-    this.setDarkMode();
   },
+
+  mounted() {
+    this.setDarkMode();
+  }
 };
 </script>
 
