@@ -17,10 +17,10 @@
         type: Number,
         required: true
       },
-      wordLength:{
-        type: Number,
-        required: true
-      },
+      // wordLength:{
+      //   type: Number,
+      //   required: true
+      // },
       wordToGuess:{
         type: String,
         required: true
@@ -39,9 +39,10 @@
 </script>
 
 <template>
-  <WordGrid :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts"></WordGrid>
-  <KeyInput :keysState="keysState"></KeyInput>
+  <WordGrid id="wordGrid" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts" @lettersState="updateLettersState" @attempts="updateAttempts"></WordGrid>
+  <KeyInput id="keyInput" :keysState="keysState" @keyValue="updateKeyValue"></KeyInput>
 </template>
 
 <style>
+
 </style>

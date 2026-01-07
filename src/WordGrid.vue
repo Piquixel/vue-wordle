@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-  <table border>
+  <table>
     <tbody>
       <WordLine :word-to-guess="wordToGuess" v-for="word in nbAttempts" :key="word"></WordLine>
     </tbody>

@@ -90,10 +90,12 @@ export default {
     //fonction qui vérifie si des tentatives sont déjà présentes
     setAttempts() {
       if (localStorage.getItem("attempts")) {
-        this.attempts = localStorage.getItem("attempts");
+        this.attempts = JSON.parse(localStorage.getItem("attempts"));
       }
+      localStorage.setItem("attempts", JSON.stringify(this.attempts));
     },
 
+    //fonction qui vérifie le mode sombre au chargement
     setDarkMode() {
       if (localStorage.getItem("darkMode") === null) {
         localStorage.setItem("darkMode", true);
@@ -108,6 +110,7 @@ export default {
       }
     },
 
+    //fonction qui change le mode sombre
     toggleDark() {
       var bdy = document.body;
       this.darkMode = !this.darkMode;
@@ -127,23 +130,11 @@ export default {
 </script>
 
 <template>
-  <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts" :wordLength="wordLength"></GameBoard>
-  <ResultPopout v-if="gameFinished"></ResultPopout>
+  <DarkModeInput id="darkModeInput" @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
+  <GameBoard id="GameBoard" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts"></GameBoard>
+  <ResultPopout id="ResultPopout" v-if="gameFinished" :attempts="attempts"></ResultPopout>
 </template>
 
 <style>
-:root {
-  --dk-bk-color: #2e2e2e;
-  --dk-sec-color: #69e169;
-}
-body {
-  background-color: var(--dk-bk-color);
-  color: white;
-  transition: 0.8s cubic-bezier(0.11, 0, 0.5, 0);
-}
-.light-mode {
-  background-color: aliceblue;
-  color: black;
-}
+
 </style>
