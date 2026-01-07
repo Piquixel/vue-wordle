@@ -135,7 +135,7 @@ export default {
   },
 
   mounted() {
-    this.setDarkMode();
+    this.setDarkMode(); //lance après que les éléments soient montés dans le DOM
   }
 };
 </script>
