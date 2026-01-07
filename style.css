@@ -30,12 +30,17 @@ body {
   z-index: 1000;
 }
 
+.dark-ico{
+  fill:white;
+}
+
 .dark-toggle{
   position: absolute;
   top: 50px;
   right: 50px;
   z-index: 1000;
   transition: 1000ms ease-in-out;
+  mix-blend-mode: difference;
 }
 
 .dark-mode-box {
