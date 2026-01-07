@@ -42,13 +42,6 @@ button{
     transform: scale(1.1);
   }
 
-#darkModeInput {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
-}
-
 .dark-ico{
   fill:white;
 }
@@ -80,8 +73,8 @@ button{
   right: 0;
   top: 0;
   bottom: 0;
-  width: 250vw;
-  height: 250vw;
+  width: 500vw;
+  height: 500vw;
   border-radius: 50%;
   background-color: black;
   transition: 1000ms ease-in-out;
@@ -142,5 +135,30 @@ td, th{
   .dark-mode{
     width:250vh;
     height:250vh;
+  }
+
+  .dark-mode-box{
+    top: 10px;
+    right: 10px;
+  }
+
+  .dark-toggle{
+    top: 10px;
+    right: 10px;
+  }
+
+  #wordGrid{
+    border-spacing: 5px;
+    max-height: 40%;
+    max-width: 80%;
+  }
+
+  #app{
+    margin-top: 5%;
+    max-height: 90vh;
+  }
+
+  body{
+    overflow: hidden;
   }
 }
