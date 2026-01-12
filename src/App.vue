@@ -125,6 +125,14 @@ export default {
       localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
       dark.classList.toggle("active");
     },
+
+    //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
+    replay(){
+      localStorage.removeItem("wordToGuess");
+      localStorage.removeItem("keysState");
+      localStorage.removeItem("attempts");
+      window.location.reload();
+    }
   },
 
   beforeMount() {
@@ -142,8 +150,8 @@ export default {
 
 <template>
   <DarkModeInput id="darkModeInput" @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard id="GameBoard" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts"></GameBoard>
-  <ResultPopout id="ResultPopout" v-if="gameFinished" :attempts="attempts"></ResultPopout>
+  <GameBoard id="gameBoard" v-if="!gameFinished" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts"></GameBoard>
+  <ResultPopout id="resultPopout" v-if="gameFinished" @replay="replay" :wordToGuess="wordToGuess" :attempts="attempts"></ResultPopout>
 </template>
 
 <style>
