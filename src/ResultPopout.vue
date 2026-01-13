@@ -38,8 +38,14 @@ export default {
 
 <template>
   <div id="resultPopout-box">
-    <h1 v-if="lostCheck == true">Perdu !</h1>
-    <h1 v-else>Gagné !</h1>
+    <span v-if="lostCheck == true">
+      <h1>Perdu !</h1>
+      <p>Le mot était : {{ wordToGuess }}</p>
+    </span>
+
+    <span v-else>
+      <h1>Gagné !</h1>
+    </span>
 
     <button id="replayBtn" @click=replay>Rejouer !</button>
   </div>

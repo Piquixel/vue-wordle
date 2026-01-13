@@ -34,6 +34,17 @@
     },
 
     methods: {
+      updateLettersState(lettersState){
+        this.$emit('lettersState', lettersState);
+      },
+
+      updateKeyValue(keyValue){
+        this.$emit('keyValue', keyValue);
+      },
+
+      updateAttempts(attempts){
+        this.$emit('attempts', attempts);
+      },
     }
   }
 </script>

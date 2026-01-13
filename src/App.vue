@@ -20,6 +20,35 @@ export default {
   },
 
   methods: {
+    encodeWord(word) {
+      const key = "wordle_clone_key";
+
+      const mixed = word
+        .split("")
+        .map((char, i) =>
+          String.fromCharCode(
+            char.charCodeAt(0) ^ key.charCodeAt(i % key.length)
+          )
+        )
+        .join("");
+
+      return btoa(mixed);
+    },
+
+    decodeWord(encoded) {
+      const key = "wordle_clone_key";
+      const mixed = atob(encoded);
+
+      return mixed
+        .split("")
+        .map((char, i) =>
+          String.fromCharCode(
+            char.charCodeAt(0) ^ key.charCodeAt(i % key.length)
+          )
+        )
+        .join("");
+    },
+
     //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
     setWord() {
       if (!localStorage.getItem("wordToGuess")) {
@@ -33,13 +62,13 @@ export default {
           .then((data) => {
             console.log(data);
             this.wordToGuess = data[0]["name"];
-            localStorage.setItem("wordToGuess", this.wordToGuess);
+            localStorage.setItem("wordToGuess", this.encodeWord(this.wordToGuess));
           })
           .catch((error) => {
             console.log(error.message);
           });
       } else {
-        this.wordToGuess = localStorage.getItem("wordToGuess");
+        this.wordToGuess = this.decodeWord(localStorage.getItem("wordToGuess"));
       }
     },
 
