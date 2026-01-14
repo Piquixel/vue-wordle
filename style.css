@@ -173,6 +173,26 @@ td, th{
   filter: brightness(0.5);
 }
 
+.keyUnused{
+    background-color: lightgray;
+    color: white;
+}
+
+.keyWrong{
+    background-color:#2e2e2e;
+    color: white;
+}
+
+.keyMisplaced{
+    background-color:goldenrod;
+    color: white;
+}
+
+.keyCorrect{
+    background-color: green;
+    color: white;
+}
+
 @media screen and (max-width: 600px) {
   .dark-mode{
     width:250vh;

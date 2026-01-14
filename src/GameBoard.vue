@@ -34,8 +34,9 @@
     },
 
     methods: {
+      //méthodes pour remonter les événements des composants enfants
       updateLettersState(lettersState){
-        this.$emit('lettersState', lettersState);
+        this.$emit('updateLettersState', lettersState);
       },
 
       updateKeyValue(keyValue){
@@ -43,7 +44,7 @@
       },
 
       updateAttempts(attempts){
-        this.$emit('attempts', attempts);
+        this.$emit('updateAttempts', attempts);
       },
     }
   }

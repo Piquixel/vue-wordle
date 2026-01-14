@@ -20,6 +20,7 @@ export default {
   },
 
   methods: {
+    //fonction qui "encode" ou plus exactement brouille le mot à deviner pour éviter qu'il soit visible dans le localstorage
     encodeWord(word) {
       const key = "wordle_clone_key";
 
@@ -35,6 +36,7 @@ export default {
       return btoa(mixed);
     },
 
+    //fonction qui "décode" le mot contenu dans le localstorage
     decodeWord(encoded) {
       const key = "wordle_clone_key";
       const mixed = atob(encoded);
@@ -142,6 +144,15 @@ export default {
       }
     },
 
+    setGameFinished(){
+      if (!localStorage.getItem("gameFinished")){
+        this.gameFinished = false;
+      } else {
+        this.gameFinished = JSON.parse(localStorage.getItem("gameFinished"));
+      }
+      localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
+    },
+
     //fonction qui change le mode sombre
     toggleDark() {
       // var bdy = document.body;
@@ -156,12 +167,30 @@ export default {
     },
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
-    replay(){
+    replay() {
       localStorage.removeItem("wordToGuess");
       localStorage.removeItem("keysState");
       localStorage.removeItem("attempts");
       window.location.reload();
-    }
+    },
+
+    //fonction qui met à jour le tableau d'objet keysState
+    // updateLettersState(lettersState){
+    //   for (const letter in lettersState){
+    //     var tuple = this.keysState.findIndex((el) => {
+    //       el.key = letter;
+    //     })
+    //     this.keysState[tuple].status = lettersState[letter];
+    //   }
+    // },
+
+    // updateAttempts(attempts){
+    //   this.attempts = attempts;
+    //   if (this.attempts.length == this.nbAttempts){
+    //     this.gameFinished = true;
+    //     localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
+    //   }
+    // },
   },
 
   beforeMount() {
@@ -169,6 +198,7 @@ export default {
     this.setWord();
     this.setkeysState();
     this.setAttempts();
+    this.setGameFinished();
   },
 
   mounted() {
@@ -179,8 +209,8 @@ export default {
 
 <template>
   <DarkModeInput id="darkModeInput" @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard id="gameBoard" v-if="!gameFinished" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts"></GameBoard>
-  <ResultPopout id="resultPopout" v-if="gameFinished" @replay="replay" :wordToGuess="wordToGuess" :attempts="attempts"></ResultPopout>
+  <GameBoard id="gameBoard" v-if="!gameFinished" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts" @updateLettersState="updateLettersState" @updateAttempts="updateAttempts"></GameBoard>
+  <ResultPopout id="resultPopout" v-else @replay="replay" :wordToGuess="wordToGuess" :attempts="attempts"></ResultPopout>
 </template>
 
 <style>
