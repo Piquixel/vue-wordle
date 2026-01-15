@@ -50,7 +50,7 @@ export default {
         if (letter === target[index]) {
           result[letter] = "correct";
         } else if (target.includes(letter)) {
-          result[letter] = result[letter] === "correct" ? "correct" : "unordered";
+          result[letter] = result[letter] === "correct" ? "correct" : "misplaced";
         } else {
           result[letter] = result[letter] || "wrong";
         }

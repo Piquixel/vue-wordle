@@ -150,6 +150,7 @@ th {
   border: 0.5px solid white;
   min-width: min-content;
   padding: 5px;
+  mix-blend-mode: difference;
 }
 
 .key:empty{

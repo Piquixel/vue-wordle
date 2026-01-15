@@ -62,7 +62,7 @@ export default {
     :keysState="keysState"
     :nbAttempts="nbAttempts"
     @lettersState="updateLettersState"
-    @attempts="updateAttempts"
+    @attemptsUpdate="updateAttempts"
   ></WordGrid>
   <KeyInput id="keyInput" :keysState="keysState" @keyValue="sendKeyInput"></KeyInput>
 </template>

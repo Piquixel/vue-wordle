@@ -168,23 +168,23 @@ export default {
       window.location.reload();
     },
 
-    //fonction qui met à jour le tableau d'objet keysState
-    // updateLettersState(lettersState){
-    //   for (const letter in lettersState){
-    //     var tuple = this.keysState.findIndex((el) => {
-    //       el.key = letter;
-    //     })
-    //     this.keysState[tuple].status = lettersState[letter];
-    //   }
-    // },
+    // fonction qui met à jour le tableau d'objet keysState
+    updateLettersState(lettersState){
+      for (const letter in lettersState){
+        var tuple = this.keysState.findIndex((el) => {
+          el.key = letter;
+        })
+        this.keysState[tuple].status = lettersState[letter];
+      }
+    },
 
-    // updateAttempts(attempts){
-    //   this.attempts = attempts;
-    //   if (this.attempts.length == this.nbAttempts){
-    //     this.gameFinished = true;
-    //     localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
-    //   }
-    // },
+    updateAttempts(attempts){
+      this.attempts = attempts;
+      if (this.attempts.length == this.nbAttempts){
+        this.gameFinished = true;
+        localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
+      }
+    },
   },
 
   beforeMount() {
