@@ -1,7 +1,31 @@
-<script>
+<!-- <script>
 export default {};
-</script>
+</script> -->
 
 <template>
-  <div></div>
+  <div class="keyboard">
+    <KeyboardKey
+      v-for="(key, index) in keyboard"
+      :key="index"
+      :keyData="key"
+      @key-pressed="forwardKey"
+    />
+  </div>
 </template>
+
+<script>
+import KeyboardKey from "./KeyboardKey.vue";
+
+export default {
+  components: { KeyboardKey },
+  props: {
+    keyboard: Array
+  },
+  methods: {
+    forwardKey(keyValue) {
+      this.$emit("key-input", keyValue);
+    }
+  }
+};
+</script>
+
