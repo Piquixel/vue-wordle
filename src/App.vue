@@ -95,6 +95,7 @@ export default {
           { key: "M", status: null },
 
           // Ligne 3
+          { key: '', status: null},
           { key: "ENTER", status: null },
           { key: "W", status: null },
           { key: "X", status: null },
@@ -103,6 +104,7 @@ export default {
           { key: "B", status: null },
           { key: "N", status: null },
           { key: "DEL", status: null },
+          { key: '', status: null},
         ];
       } else {
         this.keysState = JSON.parse(localStorage.getItem("keysState"));

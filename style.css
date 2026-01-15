@@ -96,6 +96,7 @@ button:hover svg {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   padding-top: 15px;
@@ -130,17 +131,35 @@ th {
 }
 
 #keyInput {
-  height: 50%;
-  width: 50%;
+  height: 30%;
+  width: 30%;
 }
 
 .keysState {
   max-width: 50%;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
 }
 
 .key {
   color: white;
   mix-blend-mode: difference;
+  border-radius: 5px;
+  border: 0.5px solid white;
+  min-width: min-content;
+  padding: 5px;
+}
+
+.key:empty{
+  border: none;
+  cursor: auto;
+}
+
+.key:hover{
+  filter: brightness(0.5);
 }
 
 #resultPopout {
@@ -197,6 +216,8 @@ th {
 .keyWrong {
   background-color: #2e2e2e;
   color: white;
+.keyWrong{
+    filter: brightness(0.2);
 }
 
 .keyMisplaced {
@@ -204,9 +225,14 @@ th {
   color: white;
 }
 
-.keyCorrect {
-  background-color: green;
-  color: white;
+/* .dark-mode:not(.active).keyMisplaced{
+    background-color:goldenrod;
+    color: black;
+} */
+
+.keyCorrect{
+    background-color: green;
+    color: white;
 }
 
 @media screen and (max-width: 600px) {
