@@ -140,7 +140,6 @@ td, th{
 
 .key{
   color: white;
-  mix-blend-mode: difference;
   border-radius: 5px;
   border: 0.5px solid white;
   min-width: min-content;
@@ -204,17 +203,23 @@ td, th{
 
 .keyWrong{
     filter: brightness(0.2);
+    mix-blend-mode: difference;
+
 }
 
 .keyMisplaced{
     background-color:goldenrod;
     color: white;
+    mix-blend-mode: difference;
+
 }
 
-/* .dark-mode:not(.active).keyMisplaced{
+#app:not(:has(.dark-mode-box .dark-mode.active))
+  .keysState .keyMisplaced{
     background-color:goldenrod;
     color: black;
-} */
+    mix-blend-mode: normal;
+}
 
 .keyCorrect{
     background-color: green;
