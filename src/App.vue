@@ -79,8 +79,8 @@ export default {
       if (!localStorage.getItem("keysState")) {
         this.keysState = [
           // Ligne 1
-          { key: "Z", status: null },
           { key: "A", status: null },
+          { key: "Z", status: null },
           { key: "E", status: null },
           { key: "R", status: null },
           { key: "T", status: null },
@@ -103,6 +103,7 @@ export default {
           { key: "M", status: null },
 
           // Ligne 3
+          { key: '', status: null},
           { key: "ENTER", status: null },
           { key: "W", status: null },
           { key: "X", status: null },
@@ -111,6 +112,7 @@ export default {
           { key: "B", status: null },
           { key: "N", status: null },
           { key: "DEL", status: null },
+          { key: '', status: null},
         ];
       } else {
         this.keysState = JSON.parse(localStorage.getItem("keysState"));

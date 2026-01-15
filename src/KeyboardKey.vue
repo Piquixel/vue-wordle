@@ -5,7 +5,7 @@ export default {};
 <template>
   <button
     class="key"
-    :class="keyData.status"
+    :class="[{['keyWrong']: keyData.status == 'wrong'}, {['keyMisplaced']: keyData.status == 'misplaced'}, {['keyCorrect']:keyData.status == 'correct'}]"
     @click="handleClick"
   >
     {{ keyData.key }}

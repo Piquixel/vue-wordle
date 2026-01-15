@@ -91,6 +91,7 @@ button{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   padding-top: 15px;
@@ -124,18 +125,35 @@ td, th{
 }
 
 #keyInput{
-    height: 50%;
-    width: 50%;
+    height: 30%;
+    width: 30%;
 }
 
 .keysState{
   max-width: 50%;
-
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
 }
 
 .key{
   color: white;
   mix-blend-mode: difference;
+  border-radius: 5px;
+  border: 0.5px solid white;
+  min-width: min-content;
+  padding: 5px;
+}
+
+.key:empty{
+  border: none;
+  cursor: auto;
+}
+
+.key:hover{
+  filter: brightness(0.5);
 }
 
 #resultPopout {
@@ -184,20 +202,19 @@ td, th{
   filter: brightness(0.5);
 }
 
-.keyUnused{
-    background-color: lightgray;
-    color: white;
-}
-
 .keyWrong{
-    background-color:#2e2e2e;
-    color: white;
+    filter: brightness(0.2);
 }
 
 .keyMisplaced{
     background-color:goldenrod;
     color: white;
 }
+
+/* .dark-mode:not(.active).keyMisplaced{
+    background-color:goldenrod;
+    color: black;
+} */
 
 .keyCorrect{
     background-color: green;
