@@ -20,7 +20,7 @@ export default {
     lostCheck(){
       let result = true;
       this.attempts.forEach(attempt => {
-        if (attempt == this.wordToGuess){
+        if (attempt == this.wordToGuess.toUpperCase()){
           result = false;
         }
       });

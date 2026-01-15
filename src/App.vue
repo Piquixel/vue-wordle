@@ -16,60 +16,7 @@ export default {
       attempts: [],
       nbAttempts: 6,
       wordLength: 5,
-    };
-  },
-
-  methods: {
-    //fonction qui "encode" ou plus exactement brouille le mot à deviner pour éviter qu'il soit visible dans le localstorage
-    encodeWord(word) {
-      const key = "wordle_clone_key";
-
-      const mixed = word
-        .split("")
-        .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
-        .join("");
-
-      return btoa(mixed);
-    },
-
-    //fonction qui "décode" le mot contenu dans le localstorage
-    decodeWord(encoded) {
-      const key = "wordle_clone_key";
-      const mixed = atob(encoded);
-
-      return mixed
-        .split("")
-        .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
-        .join("");
-    },
-
-    //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
-    setWord() {
-      if (!localStorage.getItem("wordToGuess")) {
-        fetch(this.apiCall + this.wordLength)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Word not found");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data);
-            this.wordToGuess = data[0]["name"];
-            localStorage.setItem("wordToGuess", this.encodeWord(this.wordToGuess));
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else {
-        this.wordToGuess = this.decodeWord(localStorage.getItem("wordToGuess"));
-      }
-    },
-
-    //fonction qui vérifie si l'état du clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
-    setkeysState() {
-      if (!localStorage.getItem("keysState")) {
-        this.keysState = [
+      keysState_default: [
           // Ligne 1
           { key: "Z", 'status': null },
           { key: "A", 'status': null },
@@ -105,7 +52,67 @@ export default {
           { key: "N", 'status': null },
           { key: "DEL", 'status': null },
           { key: '', 'status': null},
-        ];
+        ],
+    };
+  },
+
+  methods: {
+    //fonction qui "encode" ou plus exactement brouille le mot à deviner pour éviter qu'il soit visible dans le localstorage
+    encodeWord(word) {
+      const key = "wordle_clone_key";
+
+      const mixed = word
+        .split("")
+        .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
+        .join("");
+
+      return btoa(mixed);
+    },
+
+    //fonction qui "décode" le mot contenu dans le localstorage
+    decodeWord(encoded) {
+      const key = "wordle_clone_key";
+      const mixed = atob(encoded);
+
+      return mixed
+        .split("")
+        .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
+        .join("");
+    },
+
+    normalizeText(str) {
+      return str
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toUpperCase();
+    },
+
+    //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
+    setWord() {
+      if (!localStorage.getItem("wordToGuess")) {
+        fetch(this.apiCall + this.wordLength)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Word not found");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            this.wordToGuess = this.normalizeText(data[0]["name"]);
+            localStorage.setItem("wordToGuess", this.encodeWord(this.wordToGuess));
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      } else {
+        this.wordToGuess = this.decodeWord(localStorage.getItem("wordToGuess"));
+      }
+    },
+
+    //fonction qui vérifie si l'état du clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
+    setkeysState() {
+      if (!localStorage.getItem("keysState")) {
+        this.keysState = this.keysState_default;
       } else {
         this.keysState = JSON.parse(localStorage.getItem("keysState"));
       }
@@ -114,10 +121,12 @@ export default {
 
     //fonction qui vérifie si des tentatives sont déjà présentes
     setAttempts() {
-      if (localStorage.getItem("attempts")) {
+      if (!localStorage.getItem("attempts")) {
+        localStorage.setItem("attempts", JSON.stringify(this.attempts));
+      }else{
         this.attempts = JSON.parse(localStorage.getItem("attempts"));
       }
-      localStorage.setItem("attempts", JSON.stringify(this.attempts));
+
     },
 
     //fonction qui vérifie le mode sombre au chargement
@@ -147,6 +156,13 @@ export default {
       localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
     },
 
+    pageSetup() {
+      this.setWord();
+      this.setkeysState();
+      this.setAttempts();
+      this.setGameFinished();
+    },
+
     //fonction qui change le mode sombre
     toggleDark() {
       // var bdy = document.body;
@@ -162,9 +178,13 @@ export default {
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
     replay() {
-      localStorage.removeItem("wordToGuess");
-      localStorage.removeItem("keysState");
-      localStorage.removeItem("attempts");
+      localStorage.clear();
+
+      this.wordToGuess = '';
+      this.keysState = this.keysState_default;
+      this.attempts = [];
+      this.gameFinished = false;
+
       window.location.reload();
     },
 
@@ -177,11 +197,12 @@ export default {
           this.keysState[index].status = value;
         }
       }
+      localStorage.setItem('keysState', JSON.stringify(this.keysState));
     },
 
     updateAttempts(attempts){
       this.attempts = attempts;
-      if (this.attempts.length == this.nbAttempts){
+      if (this.attempts.length == this.nbAttempts || this.attempts[attempts.length - 1] == this.wordToGuess.toUpperCase()){
         this.gameFinished = true;
         localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
       }
@@ -190,10 +211,7 @@ export default {
 
   beforeMount() {
     //lance des fonctions au chargement de la page
-    this.setWord();
-    this.setkeysState();
-    this.setAttempts();
-    this.setGameFinished();
+    this.pageSetup();
   },
 
   mounted() {
