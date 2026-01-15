@@ -56,7 +56,7 @@ export default {
         }
       });
 
-      this.$emit("submitGuess", { letterState: result, word: guessStr });
+      this.$emit("submitGuess", { lettersState: result, word: guessStr });
     },
   },
 };

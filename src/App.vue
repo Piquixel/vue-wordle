@@ -71,40 +71,40 @@ export default {
       if (!localStorage.getItem("keysState")) {
         this.keysState = [
           // Ligne 1
-          { key: "A", status: null },
-          { key: "Z", status: null },
-          { key: "E", status: null },
-          { key: "R", status: null },
-          { key: "T", status: null },
-          { key: "Y", status: null },
-          { key: "U", status: null },
-          { key: "I", status: null },
-          { key: "O", status: null },
-          { key: "P", status: null },
+          { key: "Z", 'status': null },
+          { key: "A", 'status': null },
+          { key: "E", 'status': null },
+          { key: "R", 'status': null },
+          { key: "T", 'status': null },
+          { key: "Y", 'status': null },
+          { key: "U", 'status': null },
+          { key: "I", 'status': null },
+          { key: "O", 'status': null },
+          { key: "P", 'status': null },
 
           // Ligne 2
-          { key: "Q", status: null },
-          { key: "S", status: null },
-          { key: "D", status: null },
-          { key: "F", status: null },
-          { key: "G", status: null },
-          { key: "H", status: null },
-          { key: "J", status: null },
-          { key: "K", status: null },
-          { key: "L", status: null },
-          { key: "M", status: null },
+          { key: "Q", 'status': null },
+          { key: "S", 'status': null },
+          { key: "D", 'status': null },
+          { key: "F", 'status': null },
+          { key: "G", 'status': null },
+          { key: "H", 'status': null },
+          { key: "J", 'status': null },
+          { key: "K", 'status': null },
+          { key: "L", 'status': null },
+          { key: "M", 'status': null },
 
           // Ligne 3
-          { key: '', status: null},
-          { key: "ENTER", status: null },
-          { key: "W", status: null },
-          { key: "X", status: null },
-          { key: "C", status: null },
-          { key: "V", status: null },
-          { key: "B", status: null },
-          { key: "N", status: null },
-          { key: "DEL", status: null },
-          { key: '', status: null},
+          { key: '', 'status': null},
+          { key: "ENTER", 'status': null },
+          { key: "W", 'status': null },
+          { key: "X", 'status': null },
+          { key: "C", 'status': null },
+          { key: "V", 'status': null },
+          { key: "B", 'status': null },
+          { key: "N", 'status': null },
+          { key: "DEL", 'status': null },
+          { key: '', 'status': null},
         ];
       } else {
         this.keysState = JSON.parse(localStorage.getItem("keysState"));
@@ -170,11 +170,12 @@ export default {
 
     // fonction qui met à jour le tableau d'objet keysState
     updateLettersState(lettersState){
-      for (const letter in lettersState){
-        var tuple = this.keysState.findIndex((el) => {
-          el.key = letter;
-        })
-        this.keysState[tuple].status = lettersState[letter];
+      for (const [key, value] of Object.entries(lettersState)) {
+        const index = this.keysState.findIndex(el => el.key === key);
+
+        if (index !== -1) {
+          this.keysState[index].status = value;
+        }
       }
     },
 
