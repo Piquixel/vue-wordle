@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      currentGuess: Array(this.wordToGuess.length).fill(""),
+      currentGuess: [],
       cursor: 0,
     };
   },
@@ -38,6 +38,14 @@ export default {
         this.currentGuess[this.cursor] = key.toUpperCase();
         this.cursor++;
       }
+    },
+    wordToGuess: {
+      immediate: true,
+      handler(newWord) {
+        if (newWord && newWord.length > 0) {
+          this.currentGuess = Array(newWord.length).fill("");
+        }
+      },
     },
   },
   methods: {
