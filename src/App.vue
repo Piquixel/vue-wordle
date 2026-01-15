@@ -207,6 +207,7 @@ export default {
         this.gameFinished = true;
         localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
       }
+      localStorage.setItem('attempts', JSON.stringify(this.attempts));
     },
   },
 
