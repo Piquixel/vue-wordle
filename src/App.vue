@@ -79,8 +79,8 @@ export default {
       if (!localStorage.getItem("keysState")) {
         this.keysState = [
           // Ligne 1
-          { key: "Z", status: null },
           { key: "A", status: null },
+          { key: "Z", status: null },
           { key: "E", status: null },
           { key: "R", status: null },
           { key: "T", status: null },
