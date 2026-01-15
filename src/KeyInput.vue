@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     forwardKey(keyValue) {
-      this.$emit("key-input", keyValue);
+      this.$emit("KeyInput", keyValue);
     }
   }
 };
