@@ -3,9 +3,9 @@ export default {};
 </script> -->
 
 <template>
-  <div class="keyboard">
+  <div class="keysState">
     <KeyboardKey
-      v-for="(key, index) in keyboard"
+      v-for="(key, index) in keysState"
       :key="index"
       :keyData="key"
       @key-pressed="forwardKey"
@@ -19,7 +19,7 @@ import KeyboardKey from "./KeyboardKey.vue";
 export default {
   components: { KeyboardKey },
   props: {
-    keyboard: Array
+    keysState: Array
   },
   methods: {
     forwardKey(keyValue) {
