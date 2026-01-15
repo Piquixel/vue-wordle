@@ -234,7 +234,7 @@ th {
 }
 
 .keyCorrect{
-    background-color: green;
+    background-color: green !important;
     color: white;
 }
 
