@@ -30,7 +30,6 @@ export default {
           this.validateWord();
         }
       } else if (key === "DEL") {
-        console.log(this.cursor);
         if (this.cursor > 0) {
           this.cursor--;
           this.currentGuess[this.cursor] = "";
