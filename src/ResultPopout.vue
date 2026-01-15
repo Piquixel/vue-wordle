@@ -37,16 +37,18 @@ export default {
 </script>
 
 <template>
-  <div id="resultPopout-box">
-    <span v-if="lostCheck == true">
-      <h1>Perdu !</h1>
-      <p>Le mot était : {{ wordToGuess }}</p>
-    </span>
+  <div>
+    <div id="resultPopout-box">
+      <div v-if="lostCheck == true">
+        <h1>Perdu !</h1>
+        <em>Le mot était : {{ wordToGuess }}</em>
+      </div>
 
-    <span v-else>
-      <h1>Gagné !</h1>
-    </span>
+      <div v-else>
+        <h1>Gagné !</h1>
+      </div>
 
-    <button id="replayBtn" @click=replay>Rejouer !</button>
+      <button id="replayBtn" @click="replay">Rejouer !</button>
+    </div>
   </div>
 </template>

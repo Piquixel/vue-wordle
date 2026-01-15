@@ -29,7 +29,7 @@
 
     data(){
       return {
-
+        keyInput : '',
       }
     },
 
@@ -39,8 +39,10 @@
         this.$emit('updateLettersState', lettersState);
       },
 
-      updateKeyValue(keyValue){
-        this.$emit('keyValue', keyValue);
+      sendKeyInput(keyValue){
+        if (keyValue != ''){
+          this.keyInput = keyValue;
+        }
       },
 
       updateAttempts(attempts){
@@ -51,8 +53,8 @@
 </script>
 
 <template>
-  <WordGrid id="wordGrid" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts" @lettersState="updateLettersState" @attempts="updateAttempts"></WordGrid>
-  <KeyInput id="keyInput" :keysState="keysState" @keyValue="updateKeyValue"></KeyInput>
+  <WordGrid id="wordGrid" :wordToGuess="wordToGuess" :attempts="attempts" :keyInput="keyInput" :keysState="keysState" :nbAttempts="nbAttempts" @lettersState="updateLettersState" @attempts="updateAttempts"></WordGrid>
+  <KeyInput id="keyInput" :keysState="keysState" @keyValue="sendKeyInput"></KeyInput>
 </template>
 
 <style>
