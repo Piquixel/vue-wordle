@@ -3,12 +3,17 @@
   --dk-sec-color: #69e169;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
+td {
+  color: white;
+}
 
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -23,30 +28,30 @@ body {
   min-height: 100dvh;
 }
 
-button{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-  }
-
-  button svg{
-    width: 100%;
-    height: 100%;
-    transition: transform 0.3s ease;
-  }
-
-  button:hover svg{
-    transform: scale(1.1);
-  }
-
-.dark-ico{
-  fill:white;
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  padding: 0;
 }
 
-.dark-toggle{
+button svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+button:hover svg {
+  transform: scale(1.1);
+}
+
+.dark-ico {
+  fill: white;
+}
+
+.dark-toggle {
   position: absolute;
   top: 15px;
   right: 50px;
@@ -66,7 +71,7 @@ button{
   height: 40px;
 }
 
-.dark-mode{
+.dark-mode {
   position: relative;
   transform: scale(0);
   left: 0;
@@ -82,7 +87,7 @@ button{
   flex: 0 0 auto;
 }
 
-.dark-mode.active{
+.dark-mode.active {
   transform: scale(1);
   transition: 1000ms ease-in-out;
 }
@@ -96,44 +101,44 @@ button{
   padding-top: 15px;
 }
 
-#gameBoard{
-  z-index:1000;
+#gameBoard {
+  z-index: 1000;
 }
 
-#wordGrid{
-    max-height: 45%;
-    max-width: 50%;
-    border-collapse: separate;
-    border-spacing: 15px;
-    mix-blend-mode: difference;
-}
-
-td, th{
-    border: 1px solid white;
-    border-radius: 10px;
-}
-
-#wordGrid td{
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    height: 3rem;
-    width: 3rem;
-    text-transform: uppercase;
-    border-radius: 5px;
-}
-
-#keyInput{
-    height: 50%;
-    width: 50%;
-}
-
-.keysState{
+#wordGrid {
+  max-height: 45%;
   max-width: 50%;
-
+  border-collapse: separate;
+  border-spacing: 15px;
+  mix-blend-mode: difference;
 }
 
-.key{
+td,
+th {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+#wordGrid td {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  height: 3rem;
+  width: 3rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
+#keyInput {
+  height: 50%;
+  width: 50%;
+}
+
+.keysState {
+  max-width: 50%;
+}
+
+.key {
   color: white;
   mix-blend-mode: difference;
 }
@@ -156,7 +161,7 @@ td, th{
   z-index: 9990;
 }
 
-#resultPopout-box{
+#resultPopout-box {
   width: 100%;
   height: 100%;
   border-radius: 15px;
@@ -167,7 +172,7 @@ td, th{
   padding: 10px;
 }
 
-#replayBtn{
+#replayBtn {
   position: absolute;
   width: 40%;
   bottom: 10px;
@@ -179,59 +184,59 @@ td, th{
   cursor: pointer;
 }
 
-#replayBtn:hover{
+#replayBtn:hover {
   cursor: pointer;
   filter: brightness(0.5);
 }
 
-.keyUnused{
-    background-color: lightgray;
-    color: white;
+.keyUnused {
+  background-color: lightgray;
+  color: white;
 }
 
-.keyWrong{
-    background-color:#2e2e2e;
-    color: white;
+.keyWrong {
+  background-color: #2e2e2e;
+  color: white;
 }
 
-.keyMisplaced{
-    background-color:goldenrod;
-    color: white;
+.keyMisplaced {
+  background-color: goldenrod;
+  color: white;
 }
 
-.keyCorrect{
-    background-color: green;
-    color: white;
+.keyCorrect {
+  background-color: green;
+  color: white;
 }
 
 @media screen and (max-width: 600px) {
-  .dark-mode{
-    width:250vh;
-    height:250vh;
+  .dark-mode {
+    width: 250vh;
+    height: 250vh;
   }
 
-  .dark-mode-box{
+  .dark-mode-box {
     top: 10px;
     right: 10px;
   }
 
-  .dark-toggle{
+  .dark-toggle {
     top: 10px;
     right: 10px;
   }
 
-  #wordGrid{
+  #wordGrid {
     border-spacing: 5px;
     max-height: 40%;
     max-width: 80%;
   }
 
-  #app{
+  #app {
     margin-top: 5%;
     max-height: 90vh;
   }
 
-  body{
+  body {
     overflow: hidden;
   }
 }
