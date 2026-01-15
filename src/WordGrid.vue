@@ -3,21 +3,34 @@ import WordLine from "./WordLine.vue";
 export default {
   components: { WordLine },
   props: {
+    wordToGuess: {
+      type: String,
+      required: true,
+    },
     attempts: {
       type: Array,
+      required: true,
+    },
+    keysState: {
+      type: Array,
+      required: true,
+    },
+    nbAttempts: {
+      type: Number,
       required: true,
     },
   },
   data() {
     return {};
   },
+  methods: {},
 };
 </script>
 
 <template>
-  <table border>
+  <table>
     <tbody>
-      <WordLine v-for="word in attempts" :key="word" :input="attempts[word - 1]"></WordLine>
+      <WordLine :word-to-guess="wordToGuess" v-for="word in nbAttempts" :key="word"></WordLine>
     </tbody>
   </table>
 </template>

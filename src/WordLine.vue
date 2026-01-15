@@ -3,23 +3,20 @@ import WordCell from "./WordCell.vue";
 export default {
   components: { WordCell },
   props: {
-    input: {
+    wordToGuess: {
       type: String,
-      default: "",
       required: true,
     },
   },
   data() {
-    return {
-      wordLength: 5,
-      guess: this.input.padEnd(this.wordLength),
-    };
+    return {};
   },
+  methods: {},
 };
 </script>
 
 <template>
   <tr>
-    <WordCell v-for="n in wordLength" :key="n">{{ guess[n - 1] }}</WordCell>
+    <WordCell v-for="n in wordToGuess" :key="n"></WordCell>
   </tr>
 </template>
