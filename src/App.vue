@@ -13,7 +13,7 @@ export default {
       darkMode: true,
       wordToGuess: "",
       keysState: [],
-      attempts: new Array(this.nbAttempts),
+      attempts: [],
       nbAttempts: 6,
       wordLength: 5,
     };
@@ -26,11 +26,7 @@ export default {
 
       const mixed = word
         .split("")
-        .map((char, i) =>
-          String.fromCharCode(
-            char.charCodeAt(0) ^ key.charCodeAt(i % key.length)
-          )
-        )
+        .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
         .join("");
 
       return btoa(mixed);
@@ -43,11 +39,7 @@ export default {
 
       return mixed
         .split("")
-        .map((char, i) =>
-          String.fromCharCode(
-            char.charCodeAt(0) ^ key.charCodeAt(i % key.length)
-          )
-        )
+        .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
         .join("");
     },
 
@@ -130,7 +122,7 @@ export default {
 
     //fonction qui vérifie le mode sombre au chargement
     setDarkMode() {
-      var dark = document.getElementsByClassName('dark-mode')[0];
+      var dark = document.getElementsByClassName("dark-mode")[0];
       if (localStorage.getItem("darkMode") === null) {
         localStorage.setItem("darkMode", true);
         dark.classList.add("active");
@@ -146,8 +138,8 @@ export default {
       }
     },
 
-    setGameFinished(){
-      if (!localStorage.getItem("gameFinished")){
+    setGameFinished() {
+      if (!localStorage.getItem("gameFinished")) {
         this.gameFinished = false;
       } else {
         this.gameFinished = JSON.parse(localStorage.getItem("gameFinished"));
@@ -161,7 +153,7 @@ export default {
       // this.darkMode = !this.darkMode;
       // localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
       // bdy.classList.toggle("light-mode");
-      let dark = document.getElementsByClassName('dark-mode')[0];
+      let dark = document.getElementsByClassName("dark-mode")[0];
 
       this.darkMode = !this.darkMode;
       localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
@@ -205,16 +197,29 @@ export default {
 
   mounted() {
     this.setDarkMode(); //lance après que les éléments soient montés dans le DOM
-  }
+  },
 };
 </script>
 
 <template>
   <DarkModeInput id="darkModeInput" @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard id="gameBoard" v-if="!gameFinished" :wordToGuess="wordToGuess" :attempts="attempts" :keysState="keysState" :nbAttempts="nbAttempts" @updateLettersState="updateLettersState" @updateAttempts="updateAttempts"></GameBoard>
-  <ResultPopout id="resultPopout" v-else @replay="replay" :wordToGuess="wordToGuess" :attempts="attempts"></ResultPopout>
+  <GameBoard
+    id="gameBoard"
+    v-if="!gameFinished"
+    :wordToGuess="wordToGuess"
+    :attempts="attempts"
+    :keysState="keysState"
+    :nbAttempts="nbAttempts"
+    @updateLettersState="updateLettersState"
+    @updateAttempts="updateAttempts"
+  ></GameBoard>
+  <ResultPopout
+    id="resultPopout"
+    v-else
+    @replay="replay"
+    :wordToGuess="wordToGuess"
+    :attempts="attempts"
+  ></ResultPopout>
 </template>
 
-<style>
-
-</style>
+<style></style>
