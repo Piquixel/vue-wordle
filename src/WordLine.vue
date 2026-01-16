@@ -59,7 +59,8 @@ export default {
     // validation du mot
     validateWord() {
       const result = {}; // dictionnaire de résultats
-      const guessStr = this.currentGuess.join(""); // mot saisi
+      const guessLetters = this.currentGuess.map((letter) => letter.input);
+      const guessStr = guessLetters.join(""); // mot saisi
       const target = this.wordToGuess; // mot à deviner
 
       this.currentGuess.forEach((letter, index) => {

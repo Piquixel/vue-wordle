@@ -12,7 +12,10 @@ export default {
     // méthodes pour remonter les événements des composants enfants
     handleGuess({ lettersState, word }) {
       // insertion du mot dans la liste des tentatives
-      const newAttempts = [...this.attempts, word];
+      const newAttempts = [...this.attempts];
+      newAttempts.push(word);
+      console.log(newAttempts);
+
       this.$emit("attemptsUpdate", newAttempts);
       this.$emit("lettersState", lettersState);
     },
