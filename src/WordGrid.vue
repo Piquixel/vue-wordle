@@ -7,6 +7,7 @@ export default {
     "attempts", // liste des tentatives
     "nbAttempts", // nombre de tentatives maximales
     "keyInput", // valeur saisie par l'utilisateur
+    "keysState", // état de chaque lettre
   ],
   methods: {
     // méthodes pour remonter les événements des composants enfants
@@ -14,7 +15,6 @@ export default {
       // insertion du mot dans la liste des tentatives
       const newAttempts = [...this.attempts];
       newAttempts.push(word);
-      console.log(newAttempts);
 
       this.$emit("attemptsUpdate", newAttempts);
       this.$emit("lettersState", lettersState);
@@ -32,6 +32,8 @@ export default {
         :word-to-guess="wordToGuess"
         :active="index === attempts.length"
         :user-input="keyInput"
+        :attempt="attempts[index]"
+        :keys-state="keysState"
         @submitGuess="handleGuess"
       ></WordLine>
     </tbody>

@@ -16,6 +16,15 @@ export default {
       type: String,
       default: "",
     },
+    // liste des tentatives
+    attempt: {
+      type: String,
+      default: "",
+    },
+    keysState: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -46,7 +55,12 @@ export default {
     wordToGuess: {
       immediate: true,
       handler(newWord) {
-        if (newWord && newWord.length > 0) {
+        if (this.attempt !== "" && this.keysState) {
+          this.currentGuess = this.attempt.split("").map((letter) => ({
+            input: letter,
+            state: this.keysState.find((char) => char.key === letter).status,
+          }));
+        } else if (newWord && newWord.length > 0) {
           this.currentGuess = Array.from({ length: newWord.length }, () => ({
             input: "",
             state: null,
