@@ -33,11 +33,11 @@ export default {
       // si la touche est backspace et que le curseur n'est pas au début, on efface le dernier caractère
       else if (key === "DEL" && this.cursor > 0) {
         this.cursor--;
-        this.currentGuess[this.cursor] = "";
+        this.currentGuess[this.cursor].input = "";
       }
       // sinon, on ajoute la lettre au mot
       else if (this.cursor < this.wordToGuess.length && key.length === 1) {
-        this.currentGuess[this.cursor] = key.toUpperCase();
+        this.currentGuess[this.cursor].input = key;
         this.cursor++;
       }
     },
@@ -47,7 +47,10 @@ export default {
       immediate: true,
       handler(newWord) {
         if (newWord && newWord.length > 0) {
-          this.currentGuess = Array(newWord.length).fill("");
+          this.currentGuess = Array.from({ length: newWord.length }, () => ({
+            input: "",
+            state: null,
+          }));
         }
       },
     },
@@ -61,15 +64,19 @@ export default {
 
       this.currentGuess.forEach((letter, index) => {
         // si la lettre est dans le mot à deviner et à la bonne position
-        if (letter === target[index]) result[letter] = "correct";
+        if (letter.input === target[index]) result[letter.input] = "correct";
         // si la lettre est dans le mot à deviner mais à une autre position
-        else if (target.includes(letter))
+        else if (target.includes(letter.input))
           // en cas de double lettre, on priorise la bonne position
-          result[letter] = result[letter] === "correct" ? "correct" : "misplaced";
+          result[letter.input] = result[letter.input] === "correct" ? "correct" : "misplaced";
         // sinon, la lettre n'est pas dans le mot à deviner
-        else result[letter] = result[letter] || "wrong";
+        else result[letter.input] = result[letter.input] || "wrong";
       });
 
+      // mise à jour des cellules de la grille
+      this.currentGuess.forEach((letter) => {
+        letter.state = result[letter.input];
+      });
       // envoi des données au parent
       this.$emit("submitGuess", { lettersState: result, word: guessStr });
     },
@@ -79,8 +86,16 @@ export default {
 
 <template>
   <tr>
-    <td v-for="(letter, i) in currentGuess" :key="i">
-      {{ letter }}
+    <td
+      v-for="(letter, i) in currentGuess"
+      :class="{
+        keyWrong: letter.state === 'wrong',
+        keyMisplaced: letter.state === 'misplaced',
+        keyCorrect: letter.state === 'correct',
+      }"
+      :key="i"
+    >
+      {{ letter.input }}
     </td>
   </tr>
 </template>
