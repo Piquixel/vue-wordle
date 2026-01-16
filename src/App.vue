@@ -99,6 +99,9 @@ export default {
           })
           .then((data) => {
             this.wordToGuess = this.normalizeText(data[0]["name"]);
+            if(this.wordToGuess.includes("Œ")){
+              window.location.reload();
+            }
             localStorage.setItem("wordToGuess", this.encodeWord(this.wordToGuess));
           })
           .catch((error) => {
@@ -178,12 +181,10 @@ export default {
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
     replay() {
-      localStorage.clear();
-
-      this.wordToGuess = '';
-      this.keysState = this.keysState_default;
-      this.attempts = [];
-      this.gameFinished = false;
+      localStorage.removeItem('keysState');
+      localStorage.removeItem('attempts');
+      localStorage.removeItem('wordToGuess');
+      localStorage.removeItem('gameFinished');
 
       window.location.reload();
     },
@@ -206,6 +207,7 @@ export default {
         this.gameFinished = true;
         localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
       }
+      localStorage.setItem('attempts', JSON.stringify(this.attempts));
     },
   },
 

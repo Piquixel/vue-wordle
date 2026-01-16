@@ -65,7 +65,7 @@ button:hover svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 50px;
+  top: 15px;
   right: 50px;
   width: 40px;
   height: 40px;
@@ -220,10 +220,8 @@ th {
 }
 
 .keyMisplaced{
-    background-color:goldenrod;
-    color: white;
-    mix-blend-mode: difference;
-
+  background-color:goldenrod;
+  color: white;
 }
 
 #app:not(:has(.dark-mode-box .dark-mode.active))
@@ -236,6 +234,13 @@ th {
 .keyCorrect{
     background-color: green !important;
     color: white;
+}
+
+#app:not(:has(.dark-mode-box .dark-mode.active))
+  .keysState .keyCorrect{
+    background-color:green !important;
+    color: black;
+    mix-blend-mode: normal;
 }
 
 @media screen and (max-width: 600px) {

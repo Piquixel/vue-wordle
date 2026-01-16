@@ -2,12 +2,16 @@
 import WordLine from "./WordLine.vue";
 export default {
   components: { WordLine },
-  props: ["wordToGuess", "attempts", "nbAttempts", "keyInput"],
-  data() {
-    return {};
-  },
+  props: [
+    "wordToGuess", // mot à deviner
+    "attempts", // liste des tentatives
+    "nbAttempts", // nombre de tentatives maximales
+    "keyInput", // valeur saisie par l'utilisateur
+  ],
   methods: {
+    // méthodes pour remonter les événements des composants enfants
     handleGuess({ lettersState, word }) {
+      // insertion du mot dans la liste des tentatives
       const newAttempts = [...this.attempts, word];
       this.$emit("attemptsUpdate", newAttempts);
       this.$emit("lettersState", lettersState);
