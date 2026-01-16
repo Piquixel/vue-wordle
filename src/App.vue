@@ -225,7 +225,6 @@ export default {
 <template>
   <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
   <GameBoard
-    v-if="!gameFinished"
     :wordToGuess="wordToGuess"
     :attempts="attempts"
     :keysState="keysState"
@@ -234,7 +233,7 @@ export default {
     @updateAttempts="updateAttempts"
   ></GameBoard>
   <ResultPopout
-    v-else
+    v-if="gameFinished"
     @replay="replay"
     :wordToGuess="wordToGuess"
     :attempts="attempts"

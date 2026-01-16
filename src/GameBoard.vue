@@ -41,6 +41,8 @@ export default {
 
     sendKeyInput(keyValue) {
       this.keyInput = keyValue;
+      console.log(this.keyInput);
+
       this.$nextTick(() => {
         this.keyInput = "";
       });

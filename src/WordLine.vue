@@ -101,6 +101,7 @@ export default {
       this.currentGuess.forEach((letter) => {
         letter.state = lineResult.shift();
       });
+      this.cursor = 0;
       // envoi des données au parent
       this.$emit("submitGuess", { lettersState: result, word: guessStr });
     },

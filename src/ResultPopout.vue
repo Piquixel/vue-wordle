@@ -46,6 +46,7 @@ export default {
 
       <div v-else>
         <h1>Gagné !</h1>
+        <em>Vous avez trouvé le mot {{ wordToGuess }} en {{ attempts.length }} tentatives</em>
       </div>
 
       <button id="replayBtn" @click="replay">Rejouer !</button>
