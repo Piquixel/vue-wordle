@@ -37,7 +37,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div id="resultPopout">
     <div id="resultPopout-box">
       <div v-if="lostCheck == true">
         <h1>Perdu !</h1>

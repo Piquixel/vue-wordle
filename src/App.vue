@@ -10,7 +10,7 @@ export default {
     return {
       gameFinished: false, // à set en localStorage !!
       apiCall: "https://trouve-mot.fr/api/size/",
-      darkMode: true,
+      darkMode: '',
       wordToGuess: "",
       keysState: [],
       attempts: [],
@@ -136,7 +136,7 @@ export default {
         this.darkMode = true;
         dark.classList.toggle("dark", this.darkMode);
       } else {
-        this.darkMode = Boolean(localStorage.getItem("darkMode"));
+        this.darkMode = this.darkMode = localStorage.getItem("darkMode") === "true";;
       }
     },
 

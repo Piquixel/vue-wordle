@@ -170,17 +170,26 @@ th {
   width: 100%;
 }
 
+#resultPopout{
+  display: flex;
+  justify-content: center;
+  align-items: space-around;
+  width: 20%;
+  height: 50%;
+}
+
 #resultPopout-box {
   background-color: var(--text);
   color: var(--bg);
   width: 150%;
-  height: 100%;
+  height: fit-content;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  text-align: center;
 }
 
 #replayBtn {
@@ -193,6 +202,7 @@ th {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 #replayBtn:hover {
@@ -257,8 +267,12 @@ th {
     overflow: hidden;
   }
 
+  #resultPopout{
+    width: 70%;
+  }
+
   #resultPopout-box{
-    height: 50vh;
+    height: 30vh;
     width: 75vw;
   }
 }
