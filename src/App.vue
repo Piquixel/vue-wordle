@@ -16,41 +16,6 @@ export default {
       attempts: [],
       nbAttempts: 6,
       wordLength: 5,
-      keysState_default: [
-        // Ligne 1
-        { key: "A", status: null },
-        { key: "Z", status: null },
-        { key: "E", status: null },
-        { key: "R", status: null },
-        { key: "T", status: null },
-        { key: "Y", status: null },
-        { key: "U", status: null },
-        { key: "I", status: null },
-        { key: "O", status: null },
-        { key: "P", status: null },
-
-        // Ligne 2
-        { key: "Q", status: null },
-        { key: "S", status: null },
-        { key: "D", status: null },
-        { key: "F", status: null },
-        { key: "G", status: null },
-        { key: "H", status: null },
-        { key: "J", status: null },
-        { key: "K", status: null },
-        { key: "L", status: null },
-        { key: "M", status: null },
-
-        // Ligne 3
-        { key: "ENTER", status: "wide" },
-        { key: "W", status: null },
-        { key: "X", status: null },
-        { key: "C", status: null },
-        { key: "V", status: null },
-        { key: "B", status: null },
-        { key: "N", status: null },
-        { key: "DEL", status: "wide" },
-      ],
     };
   },
 
@@ -113,7 +78,41 @@ export default {
     //fonction qui vérifie si l'état du clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
     setkeysState() {
       if (!localStorage.getItem("keysState")) {
-        this.keysState = this.keysState_default;
+        this.keysState = [
+        // Ligne 1
+        { key: "A", status: null },
+        { key: "Z", status: null },
+        { key: "E", status: null },
+        { key: "R", status: null },
+        { key: "T", status: null },
+        { key: "Y", status: null },
+        { key: "U", status: null },
+        { key: "I", status: null },
+        { key: "O", status: null },
+        { key: "P", status: null },
+
+        // Ligne 2
+        { key: "Q", status: null },
+        { key: "S", status: null },
+        { key: "D", status: null },
+        { key: "F", status: null },
+        { key: "G", status: null },
+        { key: "H", status: null },
+        { key: "J", status: null },
+        { key: "K", status: null },
+        { key: "L", status: null },
+        { key: "M", status: null },
+
+        // Ligne 3
+        { key: "ENTER", status: "wide" },
+        { key: "W", status: null },
+        { key: "X", status: null },
+        { key: "C", status: null },
+        { key: "V", status: null },
+        { key: "B", status: null },
+        { key: "N", status: null },
+        { key: "DEL", status: "wide" },
+      ]
       } else {
         this.keysState = JSON.parse(localStorage.getItem("keysState"));
       }
@@ -176,12 +175,15 @@ export default {
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
     replay() {
-      localStorage.removeItem("keysState");
-      localStorage.removeItem("attempts");
-      localStorage.removeItem("wordToGuess");
-      localStorage.removeItem("gameFinished");
+        localStorage.clear();
+        localStorage.setItem("darkMode", this.darkMode);
 
-      window.location.reload();
+        this.wordToGuess = "";
+        this.attempts = [];
+        this.gameFinished = false;
+
+        this.setkeysState();
+        this.setWord(); // seulement ce qui est nécessaire
     },
 
     // fonction qui met à jour le tableau d'objet keysState
