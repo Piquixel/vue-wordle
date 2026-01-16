@@ -103,6 +103,7 @@ button:hover svg {
   width: 100%;
   height: 100%;
   padding-top: 15px;
+  gap:10%
 }
 
 #gameBoard {
@@ -141,14 +142,14 @@ th {
   align-content: center;
   align-items: center;
   justify-items: center;
-  height: 30%;
+  height: auto;
   width: 30%;
   gap: 10px;
 }
 
 .key {
   width: 100%;
-  height: 65%;
+  height: inspect(ratio1);
   color: var(--text);
   border-radius: 5px;
   min-width: min-content;
