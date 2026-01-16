@@ -50,6 +50,8 @@ export default {
       this.$emit("updateAttempts", attempts);
     },
   },
+
+  emits: ["updateLettersState", "updateAttempts"],
 };
 </script>
 
