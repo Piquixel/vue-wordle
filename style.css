@@ -132,26 +132,28 @@ th {
   border-radius: 5px;
 }
 
-#keyInput {
-  height: 30%;
-  width: 30%;
-}
-
 .keysState {
   max-width: 50%;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  justify-content: center;
+  align-content: center;
   align-items: center;
   justify-items: center;
+  height: 30%;
+  width: 30%;
+  gap: 10px;
 }
 
 .key {
+  width: 100%;
+  height: 65%;
   color: var(--text);
   border-radius: 5px;
   min-width: min-content;
   border: 0.5px solid var(--border);
-  padding: 5px;
+  font-size: 1rem;
 }
 
 .key:empty{
@@ -163,25 +165,15 @@ th {
   filter: opacity(0.5);
 }
 
-#resultPopout {
-  background-color: var(--text);
-  color: var(--bg);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 175px;
-  border-radius: 15px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9990;
+.keyWide{
+  grid-column: span 2;
+  width: 100%;
 }
 
 #resultPopout-box {
-  width: 100%;
+  background-color: var(--text);
+  color: var(--bg);
+  width: 150%;
   height: 100%;
   border-radius: 15px;
   display: flex;
@@ -192,8 +184,8 @@ th {
 }
 
 #replayBtn {
-  position: absolute;
-  width: 40%;
+  position: relative;
+  width: 100%;
   bottom: 10px;
   background-color: var(--bg);
   color: var(--text);
@@ -222,7 +214,8 @@ th {
 }
 
 @media screen and (max-width: 600px) {
-    .dark-toggle {
+
+  .dark-toggle {
     top: 10px;
     right: 10px;
   }
@@ -233,6 +226,28 @@ th {
     max-width: 80%;
   }
 
+  .keysState {
+    max-height: 40%;
+    max-width: 90vw;
+    width: max-content;
+    gap:0;
+  }
+
+  .key{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    width: 28px;
+    font-size: 0.75rem;
+    padding: 0;
+    text-align: center;
+  }
+
+  .keyWide{
+    width: 100%;
+  }
+
   #app {
     margin-top: 5%;
     max-height: 90vh;
@@ -240,5 +255,10 @@ th {
 
   body {
     overflow: hidden;
+  }
+
+  #resultPopout-box{
+    height: 50vh;
+    width: 75vw;
   }
 }

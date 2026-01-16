@@ -42,16 +42,14 @@ export default {
           { key: "M", 'status': null },
 
           // Ligne 3
-          { key: '', 'status': null},
-          { key: "ENTER", 'status': null },
+          { key: "ENTER", 'status': 'wide' },
           { key: "W", 'status': null },
           { key: "X", 'status': null },
           { key: "C", 'status': null },
           { key: "V", 'status': null },
           { key: "B", 'status': null },
           { key: "N", 'status': null },
-          { key: "DEL", 'status': null },
-          { key: '', 'status': null},
+          { key: "DEL", 'status': 'wide' },
         ],
     };
   },
@@ -223,9 +221,8 @@ export default {
 </script>
 
 <template>
-  <DarkModeInput id="darkModeInput" @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
+  <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
   <GameBoard
-    id="gameBoard"
     v-if="!gameFinished"
     :wordToGuess="wordToGuess"
     :attempts="attempts"
@@ -235,7 +232,6 @@ export default {
     @updateAttempts="updateAttempts"
   ></GameBoard>
   <ResultPopout
-    id="resultPopout"
     v-else
     @replay="replay"
     :wordToGuess="wordToGuess"
