@@ -6,16 +6,11 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {};
-  },
-
   methods: {
     toggleDark() {
       this.$emit("toggleDark");
     },
   },
-  emits: ["toggleDark"],
 };
 </script>
 

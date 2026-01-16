@@ -18,8 +18,8 @@ export default {
       wordLength: 5,
       keysState_default: [
         // Ligne 1
-        { key: "Z", status: null },
         { key: "A", status: null },
+        { key: "Z", status: null },
         { key: "E", status: null },
         { key: "R", status: null },
         { key: "T", status: null },
@@ -133,19 +133,13 @@ export default {
 
     //fonction qui vérifie le mode sombre au chargement
     setDarkMode() {
-      var dark = document.getElementsByClassName("dark-mode")[0];
-      if (localStorage.getItem("darkMode") === null) {
+      var dark = document.documentElement;
+      if (localStorage.getItem("darkMode") == null) {
         localStorage.setItem("darkMode", true);
-        dark.classList.add("active");
         this.darkMode = true;
+        dark.classList.toggle("dark", this.darkMode);
       } else {
-        this.darkMode = JSON.parse(localStorage.getItem("darkMode"));
-      }
-
-      if (this.darkMode === true) {
-        dark.classList.add("active");
-      } else {
-        dark.classList.remove("active");
+        this.darkMode = localStorage.getItem("darkMode");
       }
     },
 
@@ -166,16 +160,20 @@ export default {
     },
 
     //fonction qui change le mode sombre
-    toggleDark() {
-      // var bdy = document.body;
-      // this.darkMode = !this.darkMode;
-      // localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
-      // bdy.classList.toggle("light-mode");
-      let dark = document.getElementsByClassName("dark-mode")[0];
+    toggleDark({ x, y }) {
+      const overlay = document.createElement("div");
+      overlay.className = "theme-transition";
+      overlay.style.setProperty("--x", `${x}px`);
+      overlay.style.setProperty("--y", `${y}px`);
+
+      document.body.appendChild(overlay);
+      requestAnimationFrame(() => overlay.classList.add("active"));
 
       this.darkMode = !this.darkMode;
-      localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
-      dark.classList.toggle("active");
+      localStorage.setItem("darkMode", this.darkMode);
+      document.documentElement.classList.toggle("dark", this.darkMode);
+
+      overlay.addEventListener("transitionend", () => overlay.remove());
     },
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
@@ -193,7 +191,7 @@ export default {
       for (const [key, value] of Object.entries(lettersState)) {
         const index = this.keysState.findIndex((el) => el.key === key);
 
-        if (index !== -1) {
+        if (index !== -1 && this.keysState[index].status !== "correct") {
           this.keysState[index].status = value;
         }
       }
@@ -236,7 +234,6 @@ export default {
     @updateAttempts="updateAttempts"
   ></GameBoard>
   <ResultPopout
-    id="resultPopout"
     v-else
     @replay="replay"
     :wordToGuess="wordToGuess"
