@@ -17,42 +17,40 @@ export default {
       nbAttempts: 6,
       wordLength: 5,
       keysState_default: [
-        // Ligne 1
-        { key: "A", status: null },
-        { key: "Z", status: null },
-        { key: "E", status: null },
-        { key: "R", status: null },
-        { key: "T", status: null },
-        { key: "Y", status: null },
-        { key: "U", status: null },
-        { key: "I", status: null },
-        { key: "O", status: null },
-        { key: "P", status: null },
+          // Ligne 1
+          { key: "A", 'status': null },
+          { key: "Z", 'status': null },
+          { key: "E", 'status': null },
+          { key: "R", 'status': null },
+          { key: "T", 'status': null },
+          { key: "Y", 'status': null },
+          { key: "U", 'status': null },
+          { key: "I", 'status': null },
+          { key: "O", 'status': null },
+          { key: "P", 'status': null },
 
-        // Ligne 2
-        { key: "Q", status: null },
-        { key: "S", status: null },
-        { key: "D", status: null },
-        { key: "F", status: null },
-        { key: "G", status: null },
-        { key: "H", status: null },
-        { key: "J", status: null },
-        { key: "K", status: null },
-        { key: "L", status: null },
-        { key: "M", status: null },
+          // Ligne 2
+          { key: "Q", 'status': null },
+          { key: "S", 'status': null },
+          { key: "D", 'status': null },
+          { key: "F", 'status': null },
+          { key: "G", 'status': null },
+          { key: "H", 'status': null },
+          { key: "J", 'status': null },
+          { key: "K", 'status': null },
+          { key: "L", 'status': null },
+          { key: "M", 'status': null },
 
-        // Ligne 3
-        { key: "", status: null },
-        { key: "ENTER", status: null },
-        { key: "W", status: null },
-        { key: "X", status: null },
-        { key: "C", status: null },
-        { key: "V", status: null },
-        { key: "B", status: null },
-        { key: "N", status: null },
-        { key: "DEL", status: null },
-        { key: "", status: null },
-      ],
+          // Ligne 3
+          { key: "ENTER", 'status': 'wide' },
+          { key: "W", 'status': null },
+          { key: "X", 'status': null },
+          { key: "C", 'status': null },
+          { key: "V", 'status': null },
+          { key: "B", 'status': null },
+          { key: "N", 'status': null },
+          { key: "DEL", 'status': 'wide' },
+        ],
     };
   },
 
@@ -99,7 +97,7 @@ export default {
           })
           .then((data) => {
             this.wordToGuess = this.normalizeText(data[0]["name"]);
-            if (this.wordToGuess.includes("Œ")) {
+            if(this.wordToGuess.includes("Œ")){
               window.location.reload();
             }
             localStorage.setItem("wordToGuess", this.encodeWord(this.wordToGuess));
@@ -126,9 +124,10 @@ export default {
     setAttempts() {
       if (!localStorage.getItem("attempts")) {
         localStorage.setItem("attempts", JSON.stringify(this.attempts));
-      } else {
+      }else{
         this.attempts = JSON.parse(localStorage.getItem("attempts"));
       }
+
     },
 
     //fonction qui vérifie le mode sombre au chargement
@@ -142,6 +141,7 @@ export default {
         this.darkMode = localStorage.getItem("darkMode");
       }
     },
+
 
     setGameFinished() {
       if (!localStorage.getItem("gameFinished")) {
@@ -170,44 +170,42 @@ export default {
       requestAnimationFrame(() => overlay.classList.add("active"));
 
       this.darkMode = !this.darkMode;
-      localStorage.setItem("darkMode", this.darkMode);
+      localStorage.setItem('darkMode', this.darkMode);
       document.documentElement.classList.toggle("dark", this.darkMode);
 
       overlay.addEventListener("transitionend", () => overlay.remove());
+
     },
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
     replay() {
-      localStorage.removeItem("keysState");
-      localStorage.removeItem("attempts");
-      localStorage.removeItem("wordToGuess");
-      localStorage.removeItem("gameFinished");
+      localStorage.removeItem('keysState');
+      localStorage.removeItem('attempts');
+      localStorage.removeItem('wordToGuess');
+      localStorage.removeItem('gameFinished');
 
       window.location.reload();
     },
 
     // fonction qui met à jour le tableau d'objet keysState
-    updateLettersState(lettersState) {
+    updateLettersState(lettersState){
       for (const [key, value] of Object.entries(lettersState)) {
-        const index = this.keysState.findIndex((el) => el.key === key);
+        const index = this.keysState.findIndex(el => el.key === key);
 
-        if (index !== -1 && this.keysState[index].status !== "correct") {
+        if (index !== -1 && this.keysState[index].status !== 'correct') {
           this.keysState[index].status = value;
         }
       }
-      localStorage.setItem("keysState", JSON.stringify(this.keysState));
+      localStorage.setItem('keysState', JSON.stringify(this.keysState));
     },
 
-    updateAttempts(attempts) {
+    updateAttempts(attempts){
       this.attempts = attempts;
-      if (
-        this.attempts.length == this.nbAttempts ||
-        this.attempts[attempts.length - 1] == this.wordToGuess.toUpperCase()
-      ) {
+      if (this.attempts.length == this.nbAttempts || this.attempts[attempts.length - 1] == this.wordToGuess.toUpperCase()){
         this.gameFinished = true;
         localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
       }
-      localStorage.setItem("attempts", JSON.stringify(this.attempts));
+      localStorage.setItem('attempts', JSON.stringify(this.attempts));
     },
   },
 
@@ -240,3 +238,5 @@ export default {
     :attempts="attempts"
   ></ResultPopout>
 </template>
+
+<style></style>
