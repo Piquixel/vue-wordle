@@ -1,7 +1,5 @@
 <script>
-import WordCell from "./WordCell.vue";
 export default {
-  components: { WordCell },
   props: {
     // mot à deviner
     wordToGuess: {
@@ -81,8 +79,8 @@ export default {
 
 <template>
   <tr>
-    <WordCell v-for="(letter, i) in currentGuess" :key="i">
+    <td v-for="(letter, i) in currentGuess" :key="i">
       {{ letter }}
-    </WordCell>
+    </td>
   </tr>
 </template>
