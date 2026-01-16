@@ -73,24 +73,33 @@ export default {
     // validation du mot
     validateWord() {
       const result = {}; // dictionnaire de résultats
+      const lineResult = [];
       const guessLetters = this.currentGuess.map((letter) => letter.input);
       const guessStr = guessLetters.join(""); // mot saisi
       const target = this.wordToGuess; // mot à deviner
 
       this.currentGuess.forEach((letter, index) => {
         // si la lettre est dans le mot à deviner et à la bonne position
-        if (letter.input === target[index]) result[letter.input] = "correct";
+        if (letter.input === target[index]) {
+          result[letter.input] = "correct";
+          lineResult.push("correct");
+        }
         // si la lettre est dans le mot à deviner mais à une autre position
-        else if (target.includes(letter.input))
-          // en cas de double lettre, on priorise la bonne position
-          result[letter.input] = result[letter.input] === "correct" ? "correct" : "misplaced";
+        else if (target.includes(letter.input)) {
+          result[letter.input] = result[letter.input] === "correct" ? "correct" : "misplaced"; // en cas de double lettre, on priorise la bonne position
+          lineResult.push("misplaced");
+        }
+
         // sinon, la lettre n'est pas dans le mot à deviner
-        else result[letter.input] = result[letter.input] || "wrong";
+        else {
+          result[letter.input] = result[letter.input] || "wrong";
+          lineResult.push("wrong");
+        }
       });
 
       // mise à jour des cellules de la grille
       this.currentGuess.forEach((letter) => {
-        letter.state = result[letter.input];
+        letter.state = lineResult.shift();
       });
       // envoi des données au parent
       this.$emit("submitGuess", { lettersState: result, word: guessStr });
