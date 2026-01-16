@@ -149,7 +149,7 @@ th {
 
 .key {
   width: 100%;
-  height: inspect(ratio1);
+  aspect-ratio : 1;
   color: var(--text);
   border-radius: 5px;
   min-width: min-content;
