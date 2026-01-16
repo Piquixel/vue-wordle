@@ -32,7 +32,6 @@ export default {};
       },
       handlePhysicalKeyboard(event) {
         let letter = event.key.toUpperCase();
-        console.log(letter);
         // Lettres A-Z
         if (/^[A-Z]$/.test(letter)) {
           this.forwardKey(letter);
