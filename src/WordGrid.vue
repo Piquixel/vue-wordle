@@ -9,12 +9,19 @@ export default {
     "keyInput", // valeur saisie par l'utilisateur
     "keysState", // état de chaque lettre
   ],
+  data() {
+    return {
+      lineResults: JSON.parse(localStorage.getItem("lineResults")) || [],
+    };
+  },
   methods: {
     // méthodes pour remonter les événements des composants enfants
-    handleGuess({ lettersState, word }) {
+    handleGuess({ lettersState, word, lineResult }) {
       // insertion du mot dans la liste des tentatives
       const newAttempts = [...this.attempts];
       newAttempts.push(word);
+      this.lineResults.push(lineResult);
+      localStorage.setItem("lineResults", JSON.stringify(this.lineResults));
 
       this.$emit("attemptsUpdate", newAttempts);
       this.$emit("lettersState", lettersState);
@@ -34,6 +41,7 @@ export default {
         :user-input="keyInput"
         :attempt="attempts[index]"
         :keys-state="keysState"
+        :line-result="lineResults[index]"
         @submitGuess="handleGuess"
       ></WordLine>
     </tbody>
