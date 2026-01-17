@@ -117,9 +117,9 @@ export default {
     <td
       v-for="(letter, i) in currentGuess"
       :class="{
-        keyWrong: letter.state === 'wrong',
-        keyMisplaced: letter.state === 'misplaced',
-        keyCorrect: letter.state === 'correct',
+        'char--wrong': letter.state === 'wrong',
+        'char--misplaced': letter.state === 'misplaced',
+        'char--correct': letter.state === 'correct',
       }"
       :key="i"
     >

@@ -1,57 +1,23 @@
 :root {
-  --bg: #ffffff;
-  --text: #000000;
-  --border: #000000;
-
-  --key-bg: #ffffff;
-  --key-text: #000000;
-
-  --correct: green;
-  --misplaced: goldenrod;
-}
-
-html.dark {
-  --bg: black;
-  --text: #ffffff;
-  --border: #ffffff;
-
-  --key-bg: black;
-  --key-text: #ffffff;
-
-  --correct: green;
-  --misplaced: goldenrod;
-}
-
-
-* {
-  box-sizing: border-box;
-}
-
-td {
-  color: var(--text);
-}
-
-html,
-body,
-#app {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+  --primary-bg: light-dark(hsl(120 70 98), hsl(0 0 0));
+  --border-color: light-dark(hsl(0 0 0 / 0.12), hsl(0 0 100 / 0.08));
+  --char-color-valid: hsl(150 100 41);
+  --char-color-misplaced: hsl(48 97 62);
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--primary-bg);
   transition: 0.8s cubic-bezier(0.11, 0, 0.5, 0);
-  width: 100%;
-  min-height: 100dvh;
+  transition-property: background, color;
 }
 
 .theme-transition {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: var(--primary-bg);
   pointer-events: none;
   z-index: -1;
   clip-path: circle(0% at var(--x) var(--y));
@@ -62,14 +28,9 @@ body {
   clip-path: circle(150% at var(--x) var(--y));
 }
 
-
 button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+  background: unset;
   width: 40px;
-  height: 40px;
-  padding: 0;
 }
 
 button svg {
@@ -82,19 +43,13 @@ button:hover svg {
   transform: scale(1.1);
 }
 
-.dark-ico {
-  fill: var(--text);
-}
-
 .dark-toggle {
-  outline: none;
   position: absolute;
-  top: 15px;
-  right: 50px;
-  z-index: 9999;
-  transition: 1000ms ease-in-out;
+  top: 1rem;
+  right: 2.5rem;
+  z-index: 10;
+  transition: color 1s ease-in-out;
 }
-
 
 #app {
   display: flex;
@@ -102,13 +57,11 @@ button:hover svg {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-  padding-top: 15px;
-  gap:10%
+  row-gap: 5rem;
 }
 
 #gameBoard {
-  z-index: 1000;
+  z-index: 1;
 }
 
 #wordGrid {
@@ -118,61 +71,66 @@ button:hover svg {
   border-spacing: 15px;
 }
 
-td,
-th {
-  border: 1px solid var(--border);
-  border-radius: 10px;
+#wordGrid tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#wordGrid tr {
+  display: flex;
+  gap: 0.5rem;
 }
 
 #wordGrid td {
+  display: inline-block;
+  font: 800 2rem/1.25 sans-serif;
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  height: 3rem;
+  aspect-ratio: 1;
   width: 3rem;
-  text-transform: uppercase;
-  border-radius: 5px;
+  height: auto;
+  background-color: light-dark(hsl(120 50 95), hsl(0 0 5));
+  border: 2px solid var(--border-color);
+  border-radius: 0.25rem;
+  transition: 0.8s cubic-bezier(0.11, 0, 0.5, 0);
+  transition-property: border, background;
 }
 
 .keysState {
-  max-width: 50%;
+  width: 30vw;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   justify-content: center;
-  align-content: center;
   align-items: center;
-  justify-items: center;
   height: auto;
-  width: 30%;
   gap: 10px;
 }
 
 .key {
-  width: 100%;
-  aspect-ratio : 1;
-  color: var(--text);
+  height: 100%;
   border-radius: 5px;
-  min-width: min-content;
-  border: 0.5px solid var(--border);
-  font-size: 1rem;
+  min-width: 40px;
+  border: 1px solid var(--border-color);
+  font-size: 14px;
 }
 
-.key:empty{
-  border: none;
-  cursor: auto;
+.key:not(.keyWide) {
+  aspect-ratio: 1;
 }
 
-.key:hover{
+.keyWide {
+  width: 100%;
+  grid-column: span 2;
+  background-color: light-dark(hsl(0 0 92.5), hsl(0 0 5.5));
+  transition: 0.8s cubic-bezier(0.11, 0, 0.5, 0);
+  transition-property: background, border;
+}
+
+.key:hover {
   filter: opacity(0.5);
 }
 
-.keyWide{
-  grid-column: span 2;
-  width: 100%;
-}
-
-#resultPopout{
+#resultPopout {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -216,21 +174,20 @@ th {
   filter: brightness(0.5);
 }
 
-.keyWrong{
-    filter: opacity(0.2);
+#app .char--wrong {
+  opacity: 0.2;
 }
 
-.keyMisplaced{
-  background-color: var(--misplaced);
+#app .char--misplaced {
+  background-color: var(--char-color-misplaced);
 }
 
-.keyCorrect{
-    background-color: var(--correct) !important;
-    color: var(--text);
+#app .char--correct {
+  background-color: var(--char-color-valid);
+  color: var(--text);
 }
 
 @media screen and (max-width: 600px) {
-
   .dark-toggle {
     top: 10px;
     right: 10px;
@@ -246,10 +203,10 @@ th {
     max-height: 40%;
     max-width: 90vw;
     width: max-content;
-    gap:0;
+    gap: 0;
   }
 
-  .key{
+  .key {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -260,7 +217,7 @@ th {
     text-align: center;
   }
 
-  .keyWide{
+  .keyWide {
     width: 100%;
   }
 
@@ -273,11 +230,11 @@ th {
     overflow: hidden;
   }
 
-  #resultPopout{
+  #resultPopout {
     width: 70%;
   }
 
-  #resultPopout-box{
+  #resultPopout-box {
     height: 30vh;
     width: 75vw;
   }

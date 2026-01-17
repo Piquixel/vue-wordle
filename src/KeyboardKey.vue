@@ -1,11 +1,12 @@
-<!-- <script>
-export default {};
-</script> -->
-
 <template>
   <button
     class="key"
-    :class="[{['keyWrong']: keyData.status == 'wrong'}, {['keyMisplaced']: keyData.status == 'misplaced'}, {['keyCorrect']:keyData.status == 'correct'}, {['keyWide']:keyData.status == 'wide'}]"
+    :class="[
+      { ['char--wrong']: keyData.status == 'wrong' },
+      { ['char--misplaced']: keyData.status == 'misplaced' },
+      { ['char--correct']: keyData.status == 'correct' },
+      { ['keyWide']: keyData.status == 'wide' },
+    ]"
     @click="handleClick"
   >
     {{ keyData.key }}
@@ -15,13 +16,12 @@ export default {};
 <script>
 export default {
   props: {
-    keyData: Object
+    keyData: Object,
   },
   methods: {
     handleClick() {
       this.$emit("key-pressed", this.keyData.key);
-    }
-  }
+    },
+  },
 };
 </script>
-

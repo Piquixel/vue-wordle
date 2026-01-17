@@ -1,6 +1,6 @@
 <script>
-import WordGrid from "./WordGrid.vue";
-import KeyInput from "./KeyInput.vue";
+import WordGrid from "@/WordGrid.vue";
+import KeyInput from "@/KeyInput.vue";
 export default {
   components: { KeyInput, WordGrid },
 
@@ -17,10 +17,6 @@ export default {
       type: Number,
       required: true,
     },
-    // wordLength:{
-    //   type: Number,
-    //   required: true
-    // },
     wordToGuess: {
       type: String,
       required: true,
@@ -35,10 +31,6 @@ export default {
 
   methods: {
     //méthodes pour remonter les événements des composants enfants
-    updateLettersState(lettersState) {
-      this.$emit("updateLettersState", lettersState);
-    },
-
     sendKeyInput(keyValue) {
       this.keyInput = keyValue;
 
@@ -46,13 +38,9 @@ export default {
         this.keyInput = "";
       });
     },
-
-    updateAttempts(attempts) {
-      this.$emit("updateAttempts", attempts);
-    },
   },
 
-  emits: ["updateLettersState", "updateAttempts"],
+  emits: ["attemptsUpdate", "lettersState"],
 };
 </script>
 
@@ -64,8 +52,6 @@ export default {
     :keyInput="keyInput"
     :keysState="keysState"
     :nbAttempts="nbAttempts"
-    @lettersState="updateLettersState"
-    @attemptsUpdate="updateAttempts"
   ></WordGrid>
   <KeyInput :keysState="keysState" @keyValue="sendKeyInput"></KeyInput>
 </template>

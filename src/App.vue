@@ -1,7 +1,9 @@
 <script>
-import ResultPopout from "./ResultPopout.vue";
-import GameBoard from "./GameBoard.vue";
-import DarkModeInput from "./DarkModeInput.vue";
+import ResultPopout from "@/ResultPopout.vue";
+import GameBoard from "@/GameBoard.vue";
+import DarkModeInput from "@/DarkModeInput.vue";
+
+const KEY_UUID = "46e3f3a5-6a3c-4b4b-9b9b-6a3c4b4b9b9b";
 
 export default {
   components: { ResultPopout, GameBoard, DarkModeInput },
@@ -9,10 +11,43 @@ export default {
   data() {
     return {
       gameFinished: false, // à set en localStorage !!
-      apiCall: "https://trouve-mot.fr/api/size/",
-      darkMode: '',
+      darkMode: "",
       wordToGuess: "",
-      keysState: [],
+      keysState: [
+        // Ligne 1
+        { key: "A" },
+        { key: "Z" },
+        { key: "E" },
+        { key: "R" },
+        { key: "T" },
+        { key: "Y" },
+        { key: "U" },
+        { key: "I" },
+        { key: "O" },
+        { key: "P" },
+
+        // Ligne 2
+        { key: "Q" },
+        { key: "S" },
+        { key: "D" },
+        { key: "F" },
+        { key: "G" },
+        { key: "H" },
+        { key: "J" },
+        { key: "K" },
+        { key: "L" },
+        { key: "M" },
+
+        // Ligne 3
+        { key: "ENTER", status: "wide" },
+        { key: "W" },
+        { key: "X" },
+        { key: "C" },
+        { key: "V" },
+        { key: "B" },
+        { key: "N" },
+        { key: "DEL", status: "wide" },
+      ],
       attempts: [],
       nbAttempts: 6,
       wordLength: 5,
@@ -20,9 +55,38 @@ export default {
   },
 
   methods: {
-    //fonction qui "encode" ou plus exactement brouille le mot à deviner pour éviter qu'il soit visible dans le localstorage
+    /**
+     * fonction qui permet de charger des données depuis le localstorage
+     * @param {string} key - clef de recherche
+     * @returns {any}
+     */
+    loadData(key) {
+      const item = localStorage.getItem(key);
+      if (!item) return null;
+      if (item.startsWith("[") && item.endsWith("]")) {
+        return JSON.parse(item);
+      }
+      if (item === "true" || item === "false") return item === "true";
+      return item;
+    },
+
+    /**
+     * fonction qui permet de sauvegarder des données dans le localstorage
+     * @param {string} key - clef de recherche
+     * @param {any} data
+     * @returns {void}
+     */
+    saveData(key, data) {
+      localStorage.setItem(key, Array.isArray(data) ? JSON.stringify(data) : data);
+    },
+
+    /**
+     * fonction qui "encode" ou plus exactement brouille le mot à deviner pour éviter qu'il soit visible dans le localstorage
+     * @param {string} word
+     * @returns {string}
+     */
     encodeWord(word) {
-      const key = "wordle_clone_key";
+      const key = KEY_UUID;
 
       const mixed = word
         .split("")
@@ -32,9 +96,13 @@ export default {
       return btoa(mixed);
     },
 
-    //fonction qui "décode" le mot contenu dans le localstorage
+    /**
+     * fonction qui "décode" le mot contenu dans le localstorage
+     * @param {string} encoded
+     * @returns {string}
+     */
     decodeWord(encoded) {
-      const key = "wordle_clone_key";
+      const key = KEY_UUID;
       const mixed = atob(encoded);
 
       return mixed
@@ -43,6 +111,11 @@ export default {
         .join("");
     },
 
+    /**
+     * fonction qui permet de normaliser le texte et de supprimer les diacritiques
+     * @param {string} str
+     * @returns {string}
+     */
     normalizeText(str) {
       return str
         .normalize("NFD")
@@ -50,71 +123,44 @@ export default {
         .toUpperCase();
     },
 
-    //fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
+    /**
+     * fonction qui vérifie si le mot a déjà été tiré et qui le tire dans le cas échéant
+     */
     setWord() {
-      if (!localStorage.getItem("wordToGuess")) {
-        fetch(this.apiCall + this.wordLength)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Word not found");
-            }
-            return response.json();
+      const storedWord = this.loadData("wordToGuess");
+      if (!storedWord) {
+        fetch(`https://trouve-mot.fr/api/size/${this.wordLength}`)
+          .then((res) => {
+            if (!res.ok) throw new Error("Word not found");
+            return res.json();
           })
           .then((data) => {
             this.wordToGuess = this.normalizeText(data[0]["name"]);
             if (this.wordToGuess.includes("Œ")) {
               window.location.reload();
             }
-            localStorage.setItem("wordToGuess", this.encodeWord(this.wordToGuess));
+            this.saveData("wordToGuess", this.encodeWord(this.wordToGuess));
           })
-          .catch((error) => {
-            console.log(error.message);
-          });
+          .catch((err) => console.error(err));
       } else {
-        this.wordToGuess = this.decodeWord(localStorage.getItem("wordToGuess"));
+        this.wordToGuess = this.decodeWord(storedWord);
+      }
+    },
+
+    loadKeysState() {
+      const storedKeysState = this.loadData("keysState");
+      if (storedKeysState) {
+        this.keysState = storedKeysState;
       }
     },
 
     //fonction qui vérifie si l'état du clavier est déjà en localstorage, et dans le cas échéant le créer dans un état par défaut
     setkeysState() {
-      if (!localStorage.getItem("keysState")) {
-        this.keysState = [
-        // Ligne 1
-        { key: "A", status: null },
-        { key: "Z", status: null },
-        { key: "E", status: null },
-        { key: "R", status: null },
-        { key: "T", status: null },
-        { key: "Y", status: null },
-        { key: "U", status: null },
-        { key: "I", status: null },
-        { key: "O", status: null },
-        { key: "P", status: null },
-
-        // Ligne 2
-        { key: "Q", status: null },
-        { key: "S", status: null },
-        { key: "D", status: null },
-        { key: "F", status: null },
-        { key: "G", status: null },
-        { key: "H", status: null },
-        { key: "J", status: null },
-        { key: "K", status: null },
-        { key: "L", status: null },
-        { key: "M", status: null },
-
-        // Ligne 3
-        { key: "ENTER", status: "wide" },
-        { key: "W", status: null },
-        { key: "X", status: null },
-        { key: "C", status: null },
-        { key: "V", status: null },
-        { key: "B", status: null },
-        { key: "N", status: null },
-        { key: "DEL", status: "wide" },
-      ]
-      } else {
-        this.keysState = JSON.parse(localStorage.getItem("keysState"));
+      const storedKeysState = this.loadData("keysState");
+      if (storedKeysState) {
+        storedKeysState.forEach((storedKey) => {
+          this.keysState.find((char) => char.key === storedKey.key).status = storedKey.status;
+        });
       }
       localStorage.setItem("keysState", JSON.stringify(this.keysState));
     },
@@ -130,13 +176,14 @@ export default {
 
     //fonction qui vérifie le mode sombre au chargement
     setDarkMode() {
-      var dark = document.documentElement;
-      if (localStorage.getItem("darkMode") == null) {
-        localStorage.setItem("darkMode", true);
+      const isDark = this.loadData("darkMode");
+      if (isDark === null) {
         this.darkMode = true;
-        dark.classList.toggle("dark", this.darkMode);
+        this.saveData("darkMode", this.darkMode);
+        document.documentElement.style.colorScheme = "dark";
       } else {
-        this.darkMode = this.darkMode = localStorage.getItem("darkMode") === "true";;
+        this.darkMode = !isDark;
+        this.toggleDark();
       }
     },
 
@@ -157,33 +204,36 @@ export default {
     },
 
     //fonction qui change le mode sombre
-    toggleDark({ x, y }) {
-      const overlay = document.createElement("div");
-      overlay.className = "theme-transition";
-      overlay.style.setProperty("--x", `${x}px`);
-      overlay.style.setProperty("--y", `${y}px`);
+    toggleDark({ x, y } = {}) {
+      if (x && y) {
+        const overlay = document.createElement("div");
+        overlay.className = "theme-transition";
+        overlay.style.setProperty("--x", `${x}px`);
+        overlay.style.setProperty("--y", `${y}px`);
 
-      document.body.appendChild(overlay);
-      requestAnimationFrame(() => overlay.classList.add("active"));
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => overlay.classList.add("active"));
+
+        overlay.addEventListener("transitionend", () => overlay.remove());
+      }
 
       this.darkMode = !this.darkMode;
-      localStorage.setItem("darkMode", this.darkMode);
-      document.documentElement.classList.toggle("dark", this.darkMode);
-
-      overlay.addEventListener("transitionend", () => overlay.remove());
+      this.saveData("darkMode", this.darkMode);
+      // document.documentElement.classList.toggle("dark", this.darkMode);
+      document.documentElement.style.colorScheme = this.darkMode ? "dark" : "light";
     },
 
     //fonction qui relance une partie et qui reset le localStorage (sauf le mode sombre)
     replay() {
-        localStorage.clear();
-        localStorage.setItem("darkMode", this.darkMode);
+      localStorage.clear();
+      localStorage.setItem("darkMode", this.darkMode);
 
-        this.wordToGuess = "";
-        this.attempts = [];
-        this.gameFinished = false;
+      this.wordToGuess = "";
+      this.attempts = [];
+      this.gameFinished = false;
 
-        this.setkeysState();
-        this.setWord(); // seulement ce qui est nécessaire
+      this.setkeysState();
+      this.setWord(); // seulement ce qui est nécessaire
     },
 
     // fonction qui met à jour le tableau d'objet keysState
@@ -225,19 +275,17 @@ export default {
 <template>
   <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
   <GameBoard
-    :wordToGuess="wordToGuess"
+    :word-to-guess="wordToGuess"
     :attempts="attempts"
-    :keysState="keysState"
-    :nbAttempts="nbAttempts"
-    @updateLettersState="updateLettersState"
-    @updateAttempts="updateAttempts"
+    :keys-state="keysState"
+    :nb-attempts="nbAttempts"
+    @attemptsUpdate="updateAttempts"
+    @lettersState="updateLettersState"
   ></GameBoard>
   <ResultPopout
     v-if="gameFinished"
     @replay="replay"
-    :wordToGuess="wordToGuess"
+    :word-to-guess="wordToGuess"
     :attempts="attempts"
   ></ResultPopout>
 </template>
-
-<style></style>

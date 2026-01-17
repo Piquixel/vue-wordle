@@ -14,6 +14,7 @@ export default {
       lineResults: JSON.parse(localStorage.getItem("lineResults")) || [],
     };
   },
+  emits: ["attemptsUpdate", "lettersState"],
   methods: {
     // méthodes pour remonter les événements des composants enfants
     handleGuess({ lettersState, word, lineResult }) {
@@ -23,8 +24,8 @@ export default {
       this.lineResults.push(lineResult);
       localStorage.setItem("lineResults", JSON.stringify(this.lineResults));
 
-      this.$emit("attemptsUpdate", newAttempts);
-      this.$emit("lettersState", lettersState);
+      this.$parent.$emit("attemptsUpdate", newAttempts);
+      this.$parent.$emit("lettersState", lettersState);
     },
   },
 };
