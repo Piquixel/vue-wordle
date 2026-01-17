@@ -134,10 +134,10 @@ export default {
       if (localStorage.getItem("darkMode") == null) {
         localStorage.setItem("darkMode", true);
         this.darkMode = true;
-        dark.classList.toggle("dark", this.darkMode);
       } else {
         this.darkMode = this.darkMode = localStorage.getItem("darkMode") === "true";;
       }
+      dark.classList.toggle("dark", this.darkMode);
     },
 
     setGameFinished() {
