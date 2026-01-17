@@ -25,6 +25,9 @@ export default {
       type: Array,
       required: true,
     },
+    lineResult: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -55,10 +58,10 @@ export default {
     wordToGuess: {
       immediate: true,
       handler(newWord) {
-        if (this.attempt !== "" && this.keysState) {
+        if (this.attempt !== "" && Array.isArray(this.lineResult)) {
           this.currentGuess = this.attempt.split("").map((letter) => ({
             input: letter,
-            state: this.keysState.find((char) => char.key === letter).status,
+            state: this.lineResult[this.attempt.indexOf(letter)],
           }));
         } else if (newWord && newWord.length > 0) {
           this.currentGuess = Array.from({ length: newWord.length }, () => ({
@@ -98,12 +101,12 @@ export default {
       });
 
       // mise à jour des cellules de la grille
-      this.currentGuess.forEach((letter) => {
-        letter.state = lineResult.shift();
+      this.currentGuess.forEach((letter, index) => {
+        letter.state = lineResult[index];
       });
       this.cursor = 0;
       // envoi des données au parent
-      this.$emit("submitGuess", { lettersState: result, word: guessStr });
+      this.$emit("submitGuess", { lettersState: result, word: guessStr, lineResult });
     },
   },
 };
