@@ -17,6 +17,7 @@ export default {
   },
 
   computed: {
+    //une fois la partie finie, vérifie si le joueur a perdu
     lostCheck(){
       let result = true;
       this.attempts.forEach(attempt => {
@@ -29,6 +30,7 @@ export default {
   },
 
   methods:{
+    //émet un événement pour relancer une partie
     replay(){
       this.$emit('replay');
     },

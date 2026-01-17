@@ -43,6 +43,7 @@ export default {
         .join("");
     },
 
+    //fonction qui normalise le texte (supprime les accents et met en majuscules)
     normalizeText(str) {
       return str
         .normalize("NFD")
@@ -140,6 +141,7 @@ export default {
       dark.classList.toggle("dark", this.darkMode);
     },
 
+    //fonction qui vérifie si la partie est déjà finie
     setGameFinished() {
       if (!localStorage.getItem("gameFinished")) {
         this.gameFinished = false;
@@ -149,6 +151,7 @@ export default {
       localStorage.setItem("gameFinished", JSON.stringify(this.gameFinished));
     },
 
+    //lance touts les fonctions de setup de la page
     pageSetup() {
       this.setWord();
       this.setkeysState();

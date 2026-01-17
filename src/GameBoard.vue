@@ -17,10 +17,6 @@ export default {
       type: Number,
       required: true,
     },
-    // wordLength:{
-    //   type: Number,
-    //   required: true
-    // },
     wordToGuess: {
       type: String,
       required: true,
@@ -34,11 +30,16 @@ export default {
   },
 
   methods: {
-    //méthodes pour remonter les événements des composants enfants
+    //méthodes pour remonter l'état des lettres et des tentatives au composant parent
     updateLettersState(lettersState) {
       this.$emit("updateLettersState", lettersState);
     },
 
+    updateAttempts(attempts) {
+      this.$emit("updateAttempts", attempts);
+    },
+
+    //méthode pour recevoir la touche appuyée depuis le composant KeyInput
     sendKeyInput(keyValue) {
       this.keyInput = keyValue;
       console.log(this.keyInput);
@@ -46,10 +47,6 @@ export default {
       this.$nextTick(() => {
         this.keyInput = "";
       });
-    },
-
-    updateAttempts(attempts) {
-      this.$emit("updateAttempts", attempts);
     },
   },
 
