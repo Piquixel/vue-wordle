@@ -117,6 +117,7 @@ export default {
     <td
       v-for="(letter, i) in currentGuess"
       :class="{
+        active: this.cursor === i && active,
         'char--wrong': letter.state === 'wrong',
         'char--misplaced': letter.state === 'misplaced',
         'char--correct': letter.state === 'correct',

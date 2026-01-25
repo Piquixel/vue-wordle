@@ -273,19 +273,29 @@ export default {
 </script>
 
 <template>
-  <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode"></DarkModeInput>
-  <GameBoard
-    :word-to-guess="wordToGuess"
-    :attempts="attempts"
-    :keys-state="keysState"
-    :nb-attempts="nbAttempts"
-    @attemptsUpdate="updateAttempts"
-    @lettersState="updateLettersState"
-  ></GameBoard>
-  <ResultPopout
-    v-if="gameFinished"
-    @replay="replay"
-    :word-to-guess="wordToGuess"
-    :attempts="attempts"
-  ></ResultPopout>
+  <header>
+    <h1 id="title">Motus</h1>
+    <div class="btns">
+      <button class="material-symbols-rounded">settings</button>
+      <DarkModeInput @toggleDark="toggleDark" :darkMode="darkMode">{{
+        darkMode ? "dark_mode" : "light_mode"
+      }}</DarkModeInput>
+    </div>
+  </header>
+  <main>
+    <GameBoard
+      :word-to-guess="wordToGuess"
+      :attempts="attempts"
+      :keys-state="keysState"
+      :nb-attempts="nbAttempts"
+      @attemptsUpdate="updateAttempts"
+      @lettersState="updateLettersState"
+    ></GameBoard>
+    <ResultPopout
+      v-if="gameFinished"
+      @replay="replay"
+      :word-to-guess="wordToGuess"
+      :attempts="attempts"
+    ></ResultPopout>
+  </main>
 </template>
